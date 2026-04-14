@@ -7,7 +7,6 @@ the last successful checkpoint.
 
 import os
 import time
-import anthropic
 from pathlib import Path
 from datetime import datetime
 
@@ -18,8 +17,7 @@ from parsers.agent_output import parse_agent1_response, parse_agent2_response, p
 from parsers.handoff_builder import build_agent1_handoff, build_agent2_handoff
 from pipeline.log_store import LogStore
 from pipeline import db
-
-client = anthropic.Anthropic()
+from pipeline.claude_client import stream_message
 
 COST_TABLE = {
     'claude-opus-4-6': {'input': 15.0, 'output': 75.0},
@@ -361,19 +359,17 @@ class ModePipeline:
         in_tok = out_tok = 0
 
         try:
-            with client.messages.stream(
+            for event in stream_message(
                 model=config['model'], max_tokens=config['max_tokens'],
                 temperature=config['temperature'],
                 messages=[{'role': 'user', 'content': prompt}]
-            ) as stream:
-                for text in stream.text_stream:
-                    collected += text
-                    yield {'type': 'chunk', 'text': text}
-
-                final = stream.get_final_message()
-                if final and final.usage:
-                    in_tok = final.usage.input_tokens
-                    out_tok = final.usage.output_tokens
+            ):
+                if event['type'] == 'text':
+                    collected += event['text']
+                    yield {'type': 'chunk', 'text': event['text']}
+                elif event['type'] == 'done':
+                    in_tok = event.get('input_tokens', 0)
+                    out_tok = event.get('output_tokens', 0)
 
             duration = time.time() - start_time
             dur_ms = int(duration * 1000)
