@@ -2,9 +2,18 @@
 
 def parse_clinical_history_docx(filepath: str) -> str:
     """Extract text from clinical history DOCX."""
-    from docx import Document
-    doc = Document(filepath)
-    return '\n'.join(p.text.strip() for p in doc.paragraphs if p.text.strip())
+    try:
+        from docx import Document
+        doc = Document(filepath)
+        return '\n'.join(p.text.strip() for p in doc.paragraphs if p.text.strip())
+    except ImportError:
+        # Fallback: read raw bytes and extract text
+        with open(filepath, 'rb') as f:
+            content = f.read()
+        # Simple XML text extraction
+        import re
+        text_parts = re.findall(rb'<w:t[^>]*>([^<]+)</w:t>', content)
+        return ' '.join(p.decode('utf-8', errors='ignore') for p in text_parts)
 
 def parse_clinical_history_text(text: str) -> dict:
     """Parse clinical history text into structured sections."""

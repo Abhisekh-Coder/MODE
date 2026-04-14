@@ -1,10 +1,15 @@
 """MODE — Biomarker XLSX Parser (openpyxl, no pandas)"""
 
-from openpyxl import load_workbook
+try:
+    from openpyxl import load_workbook
+except ImportError:
+    load_workbook = None
 
 
 def parse_biomarker_xlsx(filepath: str) -> dict:
     """Parse FOXO biomarker mastersheet into structured data."""
+    if not load_workbook:
+        return {'sections': {}, 'all_markers': [], 'non_optimal': [], 'status_counts': {}, 'total_markers': 0, 'non_optimal_count': 0}
     wb = load_workbook(filepath, read_only=True, data_only=True)
     ws = wb.active
 
