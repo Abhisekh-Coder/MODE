@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "public": true,
   "buildCommand": "cd frontend && npm install && npx vite build",
   "outputDirectory": "frontend/dist",
   "framework": null,
