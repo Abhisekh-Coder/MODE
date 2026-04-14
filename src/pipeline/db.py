@@ -10,7 +10,8 @@ import uuid
 from datetime import datetime
 from typing import Optional
 
-import httpx
+import urllib.request
+import urllib.error
 
 _url = None
 _key = None
@@ -38,20 +39,22 @@ def _init():
 
 
 def _rest(method: str, table: str, params: str = '', body: dict = None) -> list:
-    """Make a REST call to Supabase PostgREST."""
+    """Make a REST call to Supabase PostgREST using stdlib."""
     _init()
     if _fallback:
         return []
     try:
         url = f'{_url}/rest/v1/{table}{params}'
-        r = httpx.request(method, url, headers=_headers, json=body, timeout=15)
-        if r.status_code >= 400:
-            print(f'[MODE DB] {method} {table} error {r.status_code}: {r.text[:200]}')
-            return []
-        try:
-            return r.json() if r.text else []
-        except Exception:
-            return []
+        data = json.dumps(body).encode() if body else None
+        req = urllib.request.Request(url, data=data, method=method)
+        for k, v in _headers.items():
+            req.add_header(k, v)
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            text = resp.read().decode()
+            return json.loads(text) if text else []
+    except urllib.error.HTTPError as e:
+        print(f'[MODE DB] {method} {table} error {e.code}: {e.read().decode()[:200]}')
+        return []
     except Exception as e:
         print(f'[MODE DB] {method} {table} failed: {e}')
         return []
@@ -135,7 +138,10 @@ def save_agent_output(playbook_id: str, agent_num: int, raw_output: str, parsed_
         'handoff_text': handoff_text, 'handoff_chars': len(handoff_text),
     }
     try:
-        httpx.post(f'{_url}/rest/v1/agent_outputs', headers=headers, json=body, timeout=15)
+        data = json.dumps(body).encode()
+        req = urllib.request.Request(f'{_url}/rest/v1/agent_outputs', data=data, method='POST')
+        for k, v in headers.items(): req.add_header(k, v)
+        urllib.request.urlopen(req, timeout=15)
     except Exception as e:
         print(f'[MODE DB] save_agent_output error: {e}')
 
@@ -169,7 +175,7 @@ def save_log(playbook_id: str, entry: dict):
     _init()
     if _fallback: return
     try:
-        httpx.post(f'{_url}/rest/v1/pipeline_logs', headers=_headers, json={
+        log_body = json.dumps({
             'id': entry.get('id', uuid.uuid4().hex[:8]),
             'playbook_id': playbook_id,
             'level': entry.get('level', 'INFO'),
@@ -178,7 +184,10 @@ def save_log(playbook_id: str, entry: dict):
             'message': entry.get('message', ''),
             'agent': entry.get('agent'),
             'data': entry.get('data'),
-        }, timeout=10)
+        }).encode()
+        req = urllib.request.Request(f'{_url}/rest/v1/pipeline_logs', data=log_body, method='POST')
+        for k, v in _headers.items(): req.add_header(k, v)
+        urllib.request.urlopen(req, timeout=10)
     except Exception:
         pass
 
@@ -203,10 +212,13 @@ def save_pipeline_data(playbook_id: str, data_key: str, content: str = None, con
     if _fallback: return
     headers = {**_headers, 'Prefer': 'resolution=merge-duplicates,return=representation'}
     try:
-        httpx.post(f'{_url}/rest/v1/pipeline_data', headers=headers, json={
+        pd_data = json.dumps({
             'playbook_id': playbook_id, 'data_key': data_key,
             'content': content, 'content_json': content_json,
-        }, timeout=15)
+        }).encode()
+        req = urllib.request.Request(f'{_url}/rest/v1/pipeline_data', data=pd_data, method='POST')
+        for k, v in headers.items(): req.add_header(k, v)
+        urllib.request.urlopen(req, timeout=15)
     except Exception as e:
         print(f'[MODE DB] save_pipeline_data error: {e}')
 
@@ -236,8 +248,9 @@ def save_setting(key: str, value: dict):
     if _fallback: return
     headers = {**_headers, 'Prefer': 'resolution=merge-duplicates,return=representation'}
     try:
-        httpx.post(f'{_url}/rest/v1/settings', headers=headers, json={
-            'key': key, 'value': value, 'updated_at': datetime.now().isoformat(),
-        }, timeout=10)
+        s_data = json.dumps({'key': key, 'value': value, 'updated_at': datetime.now().isoformat()}).encode()
+        req = urllib.request.Request(f'{_url}/rest/v1/settings', data=s_data, method='POST')
+        for k2, v2 in headers.items(): req.add_header(k2, v2)
+        urllib.request.urlopen(req, timeout=10)
     except Exception:
         pass
