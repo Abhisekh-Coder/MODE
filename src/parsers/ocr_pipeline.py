@@ -16,7 +16,10 @@ EXTRACTION_PROMPTS = {
 
 def detect_pdf_type(filepath: str) -> dict:
     """Check if PDF is text-based or scanned (needs OCR)."""
-    import fitz
+    try:
+        import fitz
+    except ImportError:
+        return {'type': 'text', 'pages': 0, 'avg_chars': 0}
     doc = fitz.open(filepath)
     total = sum(len(p.get_text().strip()) for p in doc)
     avg = total / max(len(doc), 1)
@@ -24,7 +27,10 @@ def detect_pdf_type(filepath: str) -> dict:
 
 def extract_text_pdf(filepath: str) -> list:
     """Extract text from text-based PDF."""
-    import pdfplumber
+    try:
+        import pdfplumber
+    except ImportError:
+        return [{'page_number': 1, 'text': open(filepath, errors='ignore').read()[:10000], 'tables': []}]
     pages = []
     with pdfplumber.open(filepath) as pdf:
         for i, page in enumerate(pdf.pages):
@@ -33,7 +39,10 @@ def extract_text_pdf(filepath: str) -> list:
 
 def ocr_with_claude_vision(filepath: str, doc_type: str = 'medical_report') -> list:
     """OCR via Claude Vision — convert PDF pages to images, send to Claude."""
-    import fitz
+    try:
+        import fitz
+    except ImportError:
+        return [{'page_number': 1, 'text': 'OCR not available (PyMuPDF not installed)'}]
     doc = fitz.open(filepath)
     prompt = EXTRACTION_PROMPTS.get(doc_type, EXTRACTION_PROMPTS['medical_report'])
     dpi = int(os.getenv('OCR_DPI', 300))

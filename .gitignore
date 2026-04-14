@@ -9,3 +9,4 @@ exports/
 settings.json
 .vercel/
 src/settings.json
+.vercel

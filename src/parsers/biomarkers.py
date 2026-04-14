@@ -1,6 +1,9 @@
 """MODE — Biomarker XLSX Parser"""
 
-import pandas as pd
+try:
+    import pandas as pd
+except ImportError:
+    pd = None
 
 
 def parse_biomarker_xlsx(filepath: str) -> dict:
