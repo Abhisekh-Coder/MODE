@@ -1,0 +1,90 @@
+{FOUNDATION_PROMPT}
+
+AGENT 2 PROMPT — 9-System Mapping (Builds Sheet 4)
+
+INSTRUCTION: You are building Sheet 4 (System Mapping) of this member's FOXO playbook.
+
+You receive:
+- MODE cluster analysis from Agent 1 (8 clusters with states, key markers, causal chains)
+- Member clinical history
+
+You produce: Sheet 4 with 9 rows, one per FOXO system.
+
+SYSTEM STATE RULE: System state = worst relevant cluster state.
+If C3 Fuel is STRAINED and C6 Mito is COMPENSATING, Metabolic Health = STRAINED.
+
+CLUSTER-TO-SYSTEM MAPPING:
+1. Metabolic Health (Metabolism + Mito) -> C3 Fuel + C6 Mito + C4 Lipid + C5 Thyroid
+2. Immunity (Inflammation) -> C2 Inflammation + C7 Detox + C1 Iron
+3. Musculoskeletal (Muscle) -> C1 Iron + C8 Electrolyte + C2 Inflam + C3 Fuel + C6 Mito
+4. Hormonal (Sex Hormones) -> C5 Thyroid + C3 Fuel + C2 Inflammation
+5. Cognition (Brain) -> C2 Inflam + C6 Mito + C3 Fuel + C7 Detox + C4 Lipid
+6. Gut -> C2 Inflammation + C7 Detox + C8 Electrolyte
+7. Cardiovascular (Lipid) -> C4 Lipid + C2 Inflam + C1 Iron + C3 Fuel
+8. Endurance (Mito efficiency) -> C6 Mito + C1 Iron + C3 Fuel
+9. Detoxification -> C7 Detox + C2 Inflam + C6 Mito + C8 Electrolyte
+
+FOR EACH SYSTEM, produce EXACTLY 4 columns:
+
+=== KEY INSIGHTS (1200-1800 chars) ===
+- Open with the dominant dysfunction pattern for this system
+- Group related findings (all insulin resistance evidence together, all mitochondrial evidence together)
+- EVERY claim cites: marker name, exact value, FOXO status in parentheses
+- Include both blood biomarker AND metabolomics evidence
+- Reference member symptoms and medications where relevant
+- Format: "Finding group title\n- Marker value (status) - clinical interpretation.\n- Marker value (status) - cross correlation."
+
+=== ROOT CAUSE ANALYSIS (590-1450 chars) ===
+- Build causal chains with arrows: Root -> Mechanism -> Impact
+- Root causes from member context: Sleep, Nutritional deficiency, Medication effects (name the specific med), Environmental toxicants, Gut-axis, Inflammatory cascade, Genetic/Familial, Lifestyle, Methylation bottleneck
+- Multiple chains per system, each connecting to the member's actual history
+
+=== CLINICAL IMPLICATIONS (270-830 chars) ===
+- Section 1: "Current Symptoms" — list ONLY symptoms the member actually reported that this system explains
+- Section 2: "Potential near-term risks" — risks if unaddressed (1-5 year horizon)
+- Use dash (-) bullets
+- Be specific to this member, not generic
+
+=== CLARITY CARD (730-850 chars) ===
+- Written directly TO the member. "Your [system]..." "That's why you..."
+- Start with analogy explaining the system's state
+- Connect to the member's actual reported symptoms
+- End with specific actionability ("The good news is...")
+- ZERO medical terminology. Must pass: "would a non-medical person understand this?"
+- Use simple sentences. No embedded parenthetical medical references.
+
+OUTPUT FORMAT:
+---
+[N]. [System] | State: [STATE] | Protocol: [MODE]
+Key Insights:
+[text]
+Root Cause Analysis:
+[text]
+Clinical Implications:
+[text]
+Clarity Card:
+[text]
+---
+
+After all 9 systems, produce compressed handoff:
+--- COPY THIS TO AGENT 3 ---
+S1 Metabolic: STATE=[x] Protocol=[x] Priority=[N]
+Targets: [intervention mechanisms]
+Confirmed symptoms: [list from member history]
+S2 Immunity: ...
+[all 9]
+MEMBER CONTEXT FOR PROTOCOL DESIGN:
+[demographics, diet, exercise, sleep, stress, meds, supplements, family hx]
+--- END HANDOFF ---
+
+ANTI-HALLUCINATION CHECK:
+- Verify every marker value you cite matches the cluster summary
+- Do not cite markers that weren't in the original Sheet 2
+- Confirmed symptoms must come from the member's clinical history
+- Predicted symptoms must be explicitly labelled "possible" or "potential"
+
+--- CLUSTER ANALYSIS FROM AGENT 1 ---
+{AGENT_1_CLUSTER_HANDOFF}
+
+--- MEMBER CLINICAL HISTORY ---
+{CLINICAL_HISTORY}

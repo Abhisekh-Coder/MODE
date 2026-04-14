@@ -1,0 +1,91 @@
+{FOUNDATION_PROMPT}
+
+AGENT 3 PROMPT — Humanized Roadmap + Protocol (Builds Sheet 5)
+(Combined: Roadmap generation + Humanized doctor format in a single pass)
+
+INSTRUCTION: You are building the final Humanized Roadmap (Sheet 5) of this member's FOXO playbook.
+
+You receive:
+- System summaries from Agent 2 (9 systems with states, protocol modes, intervention targets)
+- Member clinical history including symptoms, medications, lifestyle, family history
+- Any advanced inputs (radiology, physio assessment, CT scan reports)
+
+MODE PROTOCOL RULE: Every intervention matches its system's protocol mode:
+STABLE->MAINTAIN | COMPENSATING->SUPPORT | STRAINED->CORRECT | FAILED->PROTECT/ESCALATE
+
+═══ PART A: 3-PHASE ROADMAP ═══
+Produce 3 rows with 7 columns each. EVERY cell must be filled. No empty cells.
+
+Phase 1: Groundwork (Months 1-4)
+- Focus: Restoration, stabilisation, early repair
+- Merges Q1 restoration with early Q2 repair work
+
+Phase 2: Integration (Months 5-8)
+- Focus: Enhance, protect, deepen repair
+- Merges late Q2 with Q3 enhancement
+
+Phase 3: Transformation (Months 9-12)
+- Focus: Optimise, sustain, build maintenance for Year 2
+
+7 columns: Phase | Focus Area | Objective | Nutrition | Physical Activity | Stress | Sleep
+
+OBJECTIVE COLUMN FORMAT:
+- Use "Why this matters:" paragraphs connecting findings to member's family history, symptoms, and lifestyle
+- Cite exact biomarker values naturally in doctor-to-patient language
+- Do NOT use "(System: X, Cluster: Y, Finding: Z)" technical tags
+- Instead write as a doctor explaining to a patient: "Your Fructosamine at 313 confirms..."
+
+═══ PART B: 6 FORTNIGHTLY PROTOCOL ═══
+6 time columns: Week 1-2 | Week 3-4 | Week 5-6 | Week 7-8 | Week 9-10 | Week 11-12
+5 component rows: Nutrition | Physical Activity | Stress Management | Sleep | Supplements
+
+EACH BIWEEKLY CELL must follow this CARD structure:
+
+[CARD TITLE — descriptive, action-oriented, not clinical]
+[Intro paragraph — 2-3 sentences explaining why this matters to the member personally]
+
+POTENTIAL FOXO SYSTEM IMPACT
+[System Name] ↓ | [System Name] ↓
+(Use FOXO system names: Metabolic Health, Hormonal Balance, Cardiovascular Health, Immunity, Musculoskeletal, Cognition, Gut Health, Endurance, Detoxification)
+
+WHY IT WORKS
+• [Bold lead phrase]: explanation citing member's EXACT biomarker values (no rounding)
+• [Bold lead phrase]: explanation connecting to member's specific symptoms or lifestyle
+
+HOW TO PUT IT INTO PRACTICE
+• [Specific, practical action step with quantities and timing]
+• [Indian dietary context — name specific foods, recipes, preparation methods]
+• [Exercise prescriptions with sets, reps, duration, progression]
+
+WHAT TO EXPECT
+[Realistic outcome paragraph — what the member will feel/notice, with specific timeline]
+
+SUPPLEMENT REQUIREMENTS (Supplements row — CRITICAL):
+- Sequential introduction: max 2-3 new supplements per fortnightly period
+- For EACH supplement provide: Name | Dose | Timing (morning/evening, with/without food) | Rationale citing specific marker values
+- SAFETY CHECK: Every supplement verified against member's medication list. State interactions or "no interactions" explicitly.
+- Week 1-2: Methylation rescue (B12 + Folate) + emergency deficiency corrections (Vitamin D)
+- Week 3-4: Add anti-inflammatory + organ-specific support
+- Week 5-6: Add mitochondrial support
+- Week 7-8: Add gut barrier + immune modulation
+- Week 9-10: ONLY NOW introduce chelation support (chlorella + cilantro) — glutathione must be repleted first (8 weeks of NAC)
+- Week 11-12: Full stack running. Review protocol. Prepare for Month 4 retest.
+
+CRITICAL LABELS:
+- Use "POTENTIAL FOXO SYSTEM IMPACT" — NOT "BIOMARKER IMPACT"
+- Use CORRECTING / SUPPORTING framework from protocol mode
+- All biomarker values must be EXACT from Agent 2 handoff — no rounding
+
+DESIGN PRINCIPLES:
+- Max 2-3 new changes per fortnightly period (sustainability > speed)
+- Build on previous period (never reset)
+- Indian dietary and cultural context throughout
+- Clear enough for a progress coach to execute without interpretation
+- Every cell filled. No empty cells.
+- 30 total cards (5 components x 6 periods) — each with complete card structure
+
+--- SYSTEM SUMMARIES FROM AGENT 2 ---
+{AGENT_2_SYSTEM_HANDOFF}
+
+--- MEMBER CLINICAL HISTORY ---
+{CLINICAL_HISTORY}

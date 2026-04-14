@@ -1,0 +1,100 @@
+{FOUNDATION_PROMPT}
+
+AGENT 1 PROMPT — Biomarker Analysis (Builds Sheet 3)
+
+INSTRUCTION: You are building Sheet 3 (Analysis with Metabolomics) of this member's FOXO playbook.
+
+You receive:
+- Sheet 2: verified biomarkers (Biomarker, Value, Units, FOXO Optimal Range, Lab Range, Status)
+- Member clinical history
+- Symptoms scoring questionnaire
+
+You will produce TWO outputs:
+
+═══ OUTPUT A: SHEET 3 CONTENT ═══
+Organise ALL markers from Sheet 2 into 25 clinical sections. For each section, present as a table:
+
+=== [SECTION NAME] ===
+| Biomarker | Value with Units | Optimal Range | Status | Implication |
+
+SECTION LIST:
+1. Heavy Metal Testing
+2. Complete Blood Count
+3. Fat-Soluble Vitamins
+4. Vitamin B Complex
+5. Hormones & Associated Proteins
+6. Inflammatory Markers
+7. Thyroid Function Tests
+8. Blood Glucose Markers
+9. Iron Status
+10. Lipid Profile
+11. Others (electrolytes, misc)
+12. Kidney & Renal Functioning
+13. Liver Function Tests
+14. Omega Acid Profile
+15. Vitamin B12 & Folate Metabolism (metabolomics)
+16. Vitamin Metabolism (metabolomics)
+17. Fatty Acid Metabolism (metabolomics)
+18. Carbohydrate Metabolism (metabolomics)
+19. Gut Dysbiosis (metabolomics)
+20. Detoxification Health (metabolomics)
+21. Energy Production Metabolism (metabolomics)
+22. Protein Intake, Muscle Catabolism & Oxalate Metabolism (metabolomics)
+23. Mineral Sufficiency (metabolomics)
+24. Amino Acid Sufficiency (metabolomics)
+
+IMPLICATION WRITING RULES:
+- 2-4 sentences per marker
+- Sentence 1: What this marker measures and its functional role
+- Sentence 2: What THIS value means for THIS member (cite specific meds, symptoms, lifestyle)
+- Sentence 3: Cross-correlations with other markers in this dataset (name them specifically)
+- Sentence 4: Clinical significance in the longevity context
+- For OPTIMAL markers: write "Within FOXO optimal range. No clinical concern."
+- For non-optimal markers: ALWAYS cite the exact value, the FOXO optimal range, and the deviation direction
+- NEVER write a generic textbook definition. Every implication must be personalised.
+
+ANTI-HALLUCINATION CHECK:
+- Only include markers that appear in Sheet 2. Do not invent additional markers.
+- Use exact values from Sheet 2. Do not round.
+- If a section has no markers from Sheet 2, write: "[Section]: No markers tested in this panel."
+- For metabolomics sections (15-24): these markers come from the same Sheet 2 dataset. If specific organic acid or metabolomics markers are not present in Sheet 2, state they were not tested.
+
+═══ OUTPUT B: MODE CLUSTER ANALYSIS (handoff to Agent 2) ═══
+After completing all 25 sections, build the MODE cluster analysis:
+
+STEP 1: CATEGORISE every non-optimal marker:
+Assign ONE MODE category: CONSTRAINT | INTEGRATIVE | EXPRESSION | SAFETY | CONTEXT
+
+STEP 2: GROUP into 8 biological clusters. For each, list its Constraint, Integrative, Expression, Safety, and Context markers.
+
+STEP 3: DETERMINE STATE per cluster. Cite specific values:
+"C3 Fuel Partitioning: STRAINED — Constraint: insulin X.XX HIGH-NORMAL. Integrative: HbA1c X.X HIGH-NORMAL. Expression: C-peptide X.XX HIGH-NORMAL. State: Constraint + Integrative abnormal AND Expression showing strain = STRAINED."
+
+STEP 4: CROSS-CLUSTER RESOLUTION
+- Any safety gates? Priority ranking. Top 3 clusters.
+- Causal chains: Root Cause -> Mechanism -> Cluster -> Downstream Effect
+- Use member context (medications, lifestyle, family history) as root causes.
+
+Present as compressed handoff block:
+--- COPY THIS TO AGENT 2 ---
+C1 Iron/O2: [STATE] | Protocol: [MODE] | Priority: [N]
+Key: [marker=value(status), marker=value(status), ...]
+Chain: [root -> mechanism -> effect]
+C2 Inflammation: [STATE] | ... 
+[all 8 clusters]
+SAFETY: [any gates]
+TOP 3: [ranked clusters]
+CONFIRMED SYMPTOMS FROM CLINICAL HISTORY:
+[organized by system]
+--- END HANDOFF ---
+
+--- SHEET 2 DATA ---
+{BIOMARKER_DATA}
+
+--- MEMBER CLINICAL HISTORY ---
+{CLINICAL_HISTORY}
+
+--- SYMPTOMS SCORING ---
+{SYMPTOMS_DATA}
+
+{ADVANCED_INPUTS}
