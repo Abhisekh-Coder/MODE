@@ -1,12 +1,31 @@
+# Dependencies
 node_modules/
 frontend/node_modules/
+
+# Build output
 frontend/dist/
+
+# Python
 __pycache__/
 *.pyc
+*.pyo
+
+# Environment
 .env
+
+# Runtime data
 uploads/
 exports/
 settings.json
+
+# Vercel
 .vercel/
-src/settings.json
-.vercel
+frontend/.vercel/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
