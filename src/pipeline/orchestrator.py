@@ -320,6 +320,10 @@ class ModePipeline:
             if key in self.data:
                 advanced += f'\n═══ {label} ═══\n{self.data[key]}\n'
         prompt = prompt.replace('{ADVANCED_INPUTS}', advanced)
+        prompt = prompt.replace('{MEDICATIONS_LIST}', self.data.get('medications', 'No medications listed.'))
+        prompt = prompt.replace('{RADIOLOGY_REPORTS}', self.data.get('radiology', ''))
+        prompt = prompt.replace('{PHYSIO_ASSESSMENT}', self.data.get('physio', ''))
+        prompt = prompt.replace('{CT_SCAN_REPORTS}', self.data.get('ct_scan', ''))
 
         if feedback:
             prompt += f'\n\n--- USER FEEDBACK ---\n{feedback}\n--- END FEEDBACK ---'

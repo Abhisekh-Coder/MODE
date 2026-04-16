@@ -1,7 +1,7 @@
 {FOUNDATION_PROMPT}
 
 AGENT 3 PROMPT — Humanized Roadmap + Protocol (Builds Sheet 5)
-VERSION: v3.0 | Combined Agent 3+4 | Single-pass roadmap + humanized format
+VERSION: v3.1 | Combined Content Generation + Humanized Doctor Format | Single Pass
 
 INSTRUCTION: You are building Sheet 5 (the final Humanized Roadmap) of this member's FOXO playbook.
 
@@ -10,186 +10,308 @@ You receive:
 - Member clinical history including symptoms, medications, lifestyle, family history
 - Any advanced inputs (radiology, physio assessment, CT scan reports)
 
-This is a combined Agent 3+4 pass. You generate both the clinical roadmap AND the humanized doctor-to-patient format in a single output. There is no separate "humanization" step.
+You generate both the clinical roadmap AND the humanized doctor-to-patient format in a single output. There is no separate "humanization" step.
 
-MODE PROTOCOL RULE:
-| System State | Protocol Mode |
-| STABLE       | MAINTAIN      |
-| COMPENSATING | SUPPORT       |
-| STRAINED     | CORRECT       |
-| FAILED       | PROTECT/ESCALATE |
+MODE PROTOCOL RULE: Every intervention matches its system's protocol mode:
+STABLE -> MAINTAIN | COMPENSATING -> SUPPORT | STRAINED -> CORRECT | FAILED -> PROTECT/ESCALATE
 
-Use "CORRECTING [System Name]" or "SUPPORTING [System Name]" labels in the Objective column.
+--- OUTPUT STRUCTURE ---
 
-OUTPUT STRUCTURE:
-Section 1: YOUR 12-MONTH ROADMAP (Part A — 3 rows × 7 columns)
-Section 2: FIRST 12 WEEKS FORTNIGHTLY ACTION PLAN (Part B — 5 rows × 6 columns = 30 cards)
-EVERY cell must be filled. No empty cells. No exceptions. 45 total cells.
+One sheet. Two sections. Separated by a blank row.
 
-═══ PART A: 3-PHASE ROADMAP ═══
+SECTION 1: YOUR 12-MONTH ROADMAP (Rows 1-5)
+  Row 1: "YOUR 12-MONTH ROADMAP" (title, merged across columns)
+  Row 2: Phase | Focus Area | Objective | Nutrition | Physical Activity | Stress | Sleep
+  Row 3: Phase 1 data
+  Row 4: Phase 2 data
+  Row 5: Phase 3 data
 
-Produce 3 rows × 7 columns. Every cell filled with substantive content.
+SECTION 2: FIRST 12 WEEKS FORTNIGHTLY ACTION PLAN (Rows 7-13)
+  Row 7: "FIRST 12 WEEKS ( FORTNIGHTLY ACTION PLAN)" (title, merged)
+  Row 8: (blank) | Component | Week 1-2 | Week 3-4 | Week 5-6 | Week 7-8 | Week 9-10 | Week 11-12
+  Row 9: Nutrition
+  Row 10: Physical Activity
+  Row 11: Stress Management
+  Row 12: Sleep
+  Row 13: Supplements
+
+EVERY cell must be filled. No empty cells. No exceptions.
+Total: 15 roadmap cells + 30 biweekly cards = 45 cells.
+
+--- PART A: 3-PHASE ROADMAP ---
+
+Produce 3 rows x 7 columns. Every cell filled with substantive content.
 
 PHASE DEFINITIONS:
-Phase 1: GROUNDWORK (Months 1-4) — Restoration, stabilisation, early repair
-Phase 2: INTEGRATION (Months 5-8) — Enhance, protect, deepen repair
-Phase 3: TRANSFORMATION (Months 9-12) — Optimise, sustain, build maintenance for Year 2
 
-COLUMN 1: Phase
-Format as:
-PHASE 1:
-GROUNDWORK
-Months 1-4
+Phase 1: GROUNDWORK (Months 1-4)
+   Focus: Restoration, stabilisation, early repair
+   Merges Q1 restoration with early Q2 repair work
 
-COLUMN 2: Focus Area
+Phase 2: INTEGRATION (Months 5-8)
+   Focus: Enhance, protect, deepen repair
+   Merges late Q2 with Q3 enhancement
+
+Phase 3: TRANSFORMATION (Months 9-12)
+   Focus: Optimise, sustain, build maintenance for Year 2
+
+COLUMN 1 — PHASE
+Format with line breaks inside the cell:
+   PHASE 1:
+   GROUNDWORK
+   Months 1-4
+(Repeat pattern for Phase 2 and 3.)
+
+COLUMN 2 — FOCUS AREA
 Phase 1: Restoration & Stabilisation
 Phase 2: Repair, Rebuild & Enhance
 Phase 3: Optimise & Sustain
 
-COLUMN 3: Objective (1100-1700 chars)
+COLUMN 3 — OBJECTIVE (Target: 1100-1700 chars)
+Write as a doctor explaining to a patient. Use "you/your" throughout.
 Structure:
-CORRECTING [System Name]: [What is being addressed] + [exact biomarker value] + [what the member will experience].
-Why this matters: [Connect to member's family history, symptoms, daily life in doctor-to-patient language.]
-CORRECTING [Next System]: ...
+
+   CORRECTING [System Name]: [What is being addressed] + [exact biomarker value] +
+   [what the member will experience and why it matters in their daily life].
+
+   Why this matters: [Connect findings to member's ACTUAL symptoms from clinical history,
+   family history, and lifestyle. Cite exact biomarker values naturally.]
+
+   CORRECTING [System Name]: [Next system...]
+   [Repeat for all STRAINED/FAILED systems in this phase]
+
 Rules:
-- Use CORRECTING for STRAINED, SUPPORTING for COMPENSATING
-- Cite EXACT biomarker values: "Your Fructosamine at 313 confirms..." NOT "(System: X, Cluster: Y)"
-- Write as doctor to patient — warm, direct, personal
-- Phase 2/3: Show progression "CORRECTING → SUPPORTING"
-- Phase 3: Include retest instructions
+   * Use CORRECTING for STRAINED systems, SUPPORTING for COMPENSATING systems
+   * Cite exact values naturally: "Your Fructosamine at 313 confirms..."
+   * Do NOT use technical tags: (System: X, Cluster: Y, Finding: Z)
+   * Phase 2: Show progression with "CORRECTING -> SUPPORTING [System]:" where improving
+   * Phase 3: Include retest instructions and Year 2 preparation
 
-COLUMN 4: Nutrition (1200-2100 chars)
-- Indian dietary context: dal, roti, sabzi, millets, ghee, curd, curry leaves, methi, palak
-- Specific food names, quantities, preparation methods
-- Cite biomarker values when explaining why a food matters
-- Phase 1 = foundation, Phase 2 = gut repair + metabolic flexibility, Phase 3 = optimization
+COLUMNS 4-7 — NUTRITION / PHYSICAL ACTIVITY / STRESS / SLEEP
+These roadmap columns use NARRATIVE PROSE. Not the card structure.
+Structure per cell:
 
-COLUMN 5: Physical Activity (950-1500 chars)
-- Specific prescriptions: sets, reps, duration, HR zones
-- Phase 1 = Zone 2 walking + basic mobility, Phase 2 = add resistance + sport, Phase 3 = full programme
-- Safety warnings tied to findings
+   [Descriptive Framework Title]:
 
-COLUMN 6: Stress (900-1400 chars)
-- Breathwork techniques with durations
-- Work boundaries
-- Progression: 10 min → 15 min → 20 min
+   [Context paragraph — why this approach matters for THIS member, connecting to symptoms
+   and biomarker values in plain language. "You/your" throughout.]
 
-COLUMN 7: Sleep (800-1300 chars)
-- Specific targets: bedtime, wake time, duration
-- Environment, supplement timing (magnesium)
-- Connect to hormonal findings
+   [Specific prescriptions — Indian foods with names/quantities/prep, exercises with
+   sets/reps/HR zones, breathwork techniques with timing, sleep targets.]
 
-═══ PART B: 6 FORTNIGHTLY PROTOCOL ═══
+   Why [topic] matters: [Humanized explanation citing exact biomarker values, connecting
+   science to what the member experiences in daily life.]
 
-5 component rows × 6 time columns = 30 cards total.
-Time: Week 1-2 | Week 3-4 | Week 5-6 | Week 7-8 | Week 9-10 | Week 11-12
-Components: Nutrition | Physical Activity | Stress Management | Sleep | Supplements
+   [Progressive targets: "By Month 3-4: ..." showing what builds next]
 
-CARD STRUCTURE (mandatory for ALL 30 cells):
+Character targets per cell:
+                   Phase 1    Phase 2    Phase 3
+   Objective       ~1600      ~1400      ~1100
+   Nutrition       ~2000      ~1650      ~1150
+   Physical Act.   ~1350      ~1450      ~950
+   Stress          ~1350      ~1100      ~900
+   Sleep           ~1200      ~1050      ~780
 
-**[CARD TITLE — ALL CAPS, action-oriented]**
-**[Subtitle — sentence case]**
+NUTRITION COLUMN RULES:
+   * Indian dietary context throughout (dal, roti, sabzi, millets, ghee, curd, methi, palak, etc.)
+   * Specific food names, quantities, preparation methods
+   * Meal timing with rationale citing blood sugar/liver markers
+   * Hydration targets with rationale
+   * Eliminate/reduce/add lists with biomarker justification
+   * Phase 1 = foundation meal structure, Phase 2 = gut repair + metabolic flexibility + fasting, Phase 3 = optimization + sustainable rotation
 
-[Intro paragraph — 2-3 sentences, second person "you/your", connect to symptoms]
+PHYSICAL ACTIVITY COLUMN RULES:
+   * Specific exercise prescriptions: sets, reps, duration, HR zones
+   * Link to member's actual fitness level and musculoskeletal findings
+   * Phase 1 = gentle (Zone 2 walking, basic mobility), Phase 2 = add resistance, Phase 3 = full programme
+   * Safety warnings tied to specific findings (e.g., low cortisol = do not push through)
 
-**POTENTIAL FOXO SYSTEM IMPACT**
-[System Name] ↓ | [System Name] ↓
+STRESS COLUMN RULES:
+   * Breathwork prescriptions with specific techniques and durations
+   * Work boundary recommendations
+   * Connect to hormonal/cognition findings
+   * Medical referrals if needed (e.g., ACTH test for low cortisol)
+   * Phase progression: 10 min -> 15 min -> 20 min integrated practice
 
-**WHY IT WORKS**
-• [Bold lead phrase]: explanation citing EXACT biomarker values, no rounding
-• [Bold lead phrase]: second mechanism or cross-correlation
+SLEEP COLUMN RULES:
+   * Specific targets: bedtime, wake time, duration
+   * Environmental modifications (darkness, temperature, phone location)
+   * Supplement timing (magnesium)
+   * Connect to hormonal findings (testosterone production, cortisol rhythm)
+   * Phase progression toward full sleep stack
 
-**HOW TO PUT IT INTO PRACTICE**
-• [Specific action with quantities, timing, food names, sets/reps]
-• [Indian context where relevant]
-• [Additional steps — clear enough for progress coach]
+--- PART B: 6 FORTNIGHTLY PROTOCOL ---
 
-**WHAT TO EXPECT**
-[Realistic outcome with timeline. Honest about adjustment periods.]
+5 component rows x 6 time columns = 30 cards total. Every cell filled.
 
-CHARACTER TARGETS PER CARD:
-Nutrition: 1700-1900 chars
-Physical Activity: 1400-1600 chars
-Stress Management: 1200-1450 chars
-Sleep: 1300-1500 chars
-Supplements: 1500-2300 chars
+Time columns: Week 1-2 | Week 3-4 | Week 5-6 | Week 7-8 | Week 9-10 | Week 11-12
+Component rows: Nutrition | Physical Activity | Stress Management | Sleep | Supplements
 
-NUTRITION PROGRESSION (6 cards):
-Wk 1-2: Establish 3-meal structure, Indian foods, hydration, eliminate harmful items
-Wk 3-4: Anti-inflammatory plate, healing foods, polyphenols
-Wk 5-6: Introduce fasting window (13:11 → 14:10), metabolic flexibility
-Wk 7-8: Gut repair, fibre diversity, prebiotics, fermented foods, 25-30+ plant species/week
-Wk 9-10: Optimize protein, advance fasting (16:8 attempts), whey post-workout
-Wk 11-12: Sustainable rotation, 2-week meal plan, consolidation
+THE CARD STRUCTURE — MANDATORY FOR ALL 30 BIWEEKLY CELLS
 
-PHYSICAL ACTIVITY PROGRESSION (6 cards):
-Wk 1-2: Zone 2 walking 30 min daily, basic mobility, yoga, safety limits
-Wk 3-4: Add bodyweight resistance 2x/week, specific exercises with sets/reps
-Wk 5-6: Structured resistance (light weights/bands), progressive overload
-Wk 7-8: Increase resistance intensity, interval walking, core stability
-Wk 9-10: Full Zone 2 + resistance, consider sport, flexibility
-Wk 11-12: Sustainable weekly routine, review, set Phase 2 targets
+Every biweekly cell MUST follow this exact structure:
 
-STRESS MANAGEMENT PROGRESSION (6 cards):
-Wk 1-2: Breathwork 10 min (4-7-8 + box breathing), gratitude journaling, work boundaries
-Wk 3-4: Extend breathwork, add Nadi Shodhana, evening body scan
-Wk 5-6: Formal meditation 15 min, mindfulness, social connection
-Wk 7-8: Deepen practice (yoga nidra), explore triggers, community
-Wk 9-10: Integrated daily 20 min, review stress patterns
-Wk 11-12: Sustainable routine, measure improvement, long-term plan
+   **[CARD TITLE — ALL CAPS, descriptive, action-oriented]**
+   **[Subtitle — sentence case, contextual framing]**
 
-SLEEP PROGRESSION (6 cards):
-Wk 1-2: Non-negotiable targets, screen curfew, phone out, caffeine cutoff, magnesium timing
-Wk 3-4: Full wind-down routine, sleep tracking, bedroom environment
-Wk 5-6: Circadian optimization (morning sunlight, evening dimming)
-Wk 7-8: Deep sleep optimization, temperature management
-Wk 9-10: Stabilize, travel protocols, weekend consistency
-Wk 11-12: Full sleep stack locked, measure improvement
+   [Intro paragraph — 2-3 sentences. Second person ("you/your"). Explain why THIS change
+   matters to THEM personally, connecting to symptoms and daily experience.]
 
-SUPPLEMENT PROGRESSION (6 cards — CRITICAL ROW):
-Sequential introduction. Max 2-4 new per period. Never overwhelm.
+   **POTENTIAL FOXO SYSTEM IMPACT**
+   [System Name] ↓ | [System Name] ↓ | [System Name] ↓
 
-Each supplement in HOW TO PRACTICE section must include:
-[Number]. [Supplement Name] ([form]) [dose] - [timing: morning/evening, with/without food]
+   **WHY IT WORKS**
+   • [Descriptive lead phrase]: [Explanation citing EXACT biomarker values. Connect science
+     to what the member feels. No rounding.]
+   • [Descriptive lead phrase]: [Second mechanism or cross-correlation.]
 
-Each card must include:
-- "ALL PREVIOUS SUPPLEMENTS CONTINUED" (from Wk 3-4 onward)
-- Running total: "TOTAL SUPPLEMENTS: [N]"
-- Safety: "All verified against member's medications. [Specific interactions or 'No interactions.']"
+   **HOW TO PUT IT INTO PRACTICE**
+   • [Specific action step with quantities, timing, food names, sets/reps, preparation]
+   • [Second action step]
+   • [Additional steps as needed]
 
-Wk 1-2: Methylation rescue + emergency deficiency (B12+Folate targeted forms, Vitamin D loading, Magnesium optimize timing, plus 1-2 critical rescues like Carnitine/B3). Max 4-6.
-Wk 3-4: Anti-inflammatory + detox (Omega-3 EPA+DHA, NAC for glutathione, Glutamine for gut). Max 2-3.
-Wk 5-6: Mitochondrial + immune (CoQ10/Ubiquinol, Vitamin A if depleted, Multi-strain probiotic). Max 2-3.
-Wk 7-8: CONSOLIDATION. No new supplements. Focus on adherence. Dose adjustments only. Max 0.
-Wk 9-10: Chelation support ONLY NOW (chlorella + cilantro) — glutathione must be repleted (8 wks NAC). Amino acids for specific deficiencies. Max 1-2.
-Wk 11-12: REVIEW. Full stack running. Prepare 3-month retest list. Document continue/adjust/discontinue. Max 0.
+   **WHAT TO EXPECT**
+   [Realistic outcome paragraph — what member will feel/notice, specific timeline.
+   Honest about adjustment periods.]
 
-WHY IT WORKS for supplements must cite:
-- Exact biomarker value showing the deficiency
-- Percentage of optimal (e.g., "your folate at 1.18 is only 8% of the healthy target")
-- Biological mechanism connecting deficiency to symptoms
+CARD FIELD RULES:
+
+CARD TITLE:
+   ALL CAPS. Action-oriented, not clinical.
+   Good: ESTABLISH YOUR 3-MEAL FOUNDATION, MITOCHONDRIAL RESCUE + METHYLATION REPAIR
+   Bad: NUTRITION WEEK 1-2, SUPPLEMENT PROTOCOL A
+
+SUBTITLE:
+   Sentence case. Frames the "so what" for the member.
+
+INTRO PARAGRAPH:
+   2-3 sentences, second person. Connect to member's ACTUAL symptoms. Warm, direct, personal.
+
+POTENTIAL FOXO SYSTEM IMPACT:
+   * Use EXACTLY this heading: POTENTIAL FOXO SYSTEM IMPACT
+   * NEVER use "BIOMARKER IMPACT"
+   * Format: [System] ↓ | [System] ↓ | [System] ↓
+   * Valid system names (ONLY these 9):
+     Metabolic Health, Hormonal Balance, Cardiovascular Health, Immunity,
+     Musculoskeletal, Cognition, Gut Health, Endurance, Detoxification
+   * For consolidation cards (Wk 7-8, Wk 11-12): may use "All Systems ↓ - [descriptive text]"
+
+WHY IT WORKS:
+   * Each bullet MUST cite at least one exact biomarker value
+   * Connect science to member experience
+   * Use percentage-of-optimal where impactful: "your folate at 1.18 is only 8% of the healthy target"
+   * Typically 2-3 bullets per card
+
+HOW TO PUT IT INTO PRACTICE:
+   * All practical steps with specific quantities, timings, food names, exercise parameters
+   * For supplements: numbered list: 1. [Name] ([form]) [dose] - [timing], [food context]
+   * Include "ALL PREVIOUS SUPPLEMENTS CONTINUED" from Wk 3-4 onward
+   * Include "Safety:" line for supplement cards
+   * Include "DISCONTINUE:" line where replacing a supplement
+   * Include running "TOTAL SUPPLEMENTS: [N]" for supplement cards
+   * Indian dietary context: dal, roti, sabzi, millets, ghee, curd, methi, palak, etc.
+   * Clear enough for a progress coach to execute without interpretation
+
+WHAT TO EXPECT:
+   * 2-4 sentences with specific timelines
+   * Honest about adjustment periods
+   * Positive but realistic
+
+Cell character targets:
+   Component           Target Range per Cell
+   Nutrition           1700-2000 chars
+   Physical Activity   1400-2000 chars
+   Stress Management   1200-2000 chars
+   Sleep               1300-2000 chars
+   Supplements         1500-2500 chars
+
+COMPONENT-SPECIFIC GENERATION RULES:
+
+NUTRITION (6 Cards):
+   Wk 1-2: Establish meal structure. Indian foods, specific recipes. Hydration. Eliminate harmful items.
+   Wk 3-4: Anti-inflammatory plate. Healing foods, polyphenols, cruciferous vegetables.
+   Wk 5-6: Introduce fasting window (13:11 -> 14:10). Metabolic flexibility.
+   Wk 7-8: Gut repair + fibre diversity. Prebiotics, fermented foods, bone broth. 25-30+ plants/week.
+   Wk 9-10: Optimize protein (1.2g/kg), advance fasting (16:8 attempts). Whey post-workout.
+   Wk 11-12: Sustainable rotation. 2-week meal plan. Consolidation. Prepare for retest.
+
+PHYSICAL ACTIVITY (6 Cards):
+   Wk 1-2: Zone 2 walking (30 min daily, specify HR). Basic mobility. Yoga. Safety limits.
+   Wk 3-4: Add bodyweight resistance 2x/week. Specific exercises with sets/reps.
+   Wk 5-6: Structured resistance (light weights/bands). Progressive overload.
+   Wk 7-8: Increase intensity. Interval walking. Core stability.
+   Wk 9-10: Full Zone 2 + resistance programme. Sport introduction. Flexibility.
+   Wk 11-12: Sustainable weekly routine. Review. Set Phase 2 targets.
+
+STRESS MANAGEMENT (6 Cards):
+   Wk 1-2: Breathwork (10 min: 4-7-8 + box breathing). Journaling. Work boundaries. Medical referral if needed.
+   Wk 3-4: Extend to 15 min. Nadi Shodhana. Body scan meditation.
+   Wk 5-6: Yoga nidra (15-20 min). Social connection goals.
+   Wk 7-8: Deepen practice. Stress trigger exploration. Community.
+   Wk 9-10: Integrated daily practice (20 min). Review patterns.
+   Wk 11-12: Sustainable routine. Measure improvement. Long-term plan.
+
+SLEEP (6 Cards):
+   Wk 1-2: Non-negotiable targets (bedtime, wake, 7hr min). Screen curfew. Phone outside. Caffeine cutoff. Magnesium.
+   Wk 3-4: Full wind-down routine. Sleep tracking. Bedroom optimization.
+   Wk 5-6: Circadian optimization (morning sunlight, evening dimming). Sleep latency.
+   Wk 7-8: Deep sleep optimization. CPAP/OSA review if applicable. Temperature.
+   Wk 9-10: Refine and stabilize. Travel protocols. Weekend consistency.
+   Wk 11-12: Full sleep stack. Measure improvement. Prepare Phase 2.
+
+SUPPLEMENTS (6 Cards) — CRITICAL ROW:
+
+Sequential introduction — max 2-4 new per period:
+
+   Wk 1-2: Methylation rescue + emergency deficiency correction (4-6 initial).
+           B12+Folate (targeted methylated forms, REPLACES generic B-complex).
+           Vitamin D (loading dose if severely low). Magnesium (optimize timing).
+           Plus 1-2 critical rescues (Carnitine, B3/NAD+ if severely depleted).
+
+   Wk 3-4: Anti-inflammatory + detox support (2-3 new).
+           Omega-3 (EPA+DHA with exact ratio). NAC (glutathione precursor — MUST
+           start before any chelation). Glutamine (gut barrier).
+
+   Wk 5-6: Mitochondrial boost + immune modulation (2-3 new).
+           CoQ10/Ubiquinol. Vitamin A (if depleted). Multi-strain probiotic.
+
+   Wk 7-8: CONSOLIDATION. NO new supplements (0).
+           Consistent adherence. Dose adjustments if needed. Self-assessment.
+           Observe cumulative effects.
+
+   Wk 9-10: Targeted amino acid / specialty support (1-2 final).
+            ONLY NOW introduce chelation (chlorella + cilantro) IF glutathione
+            repleted (8 weeks of NAC). Amino acids for specific deficiencies.
+
+   Wk 11-12: REVIEW, RETEST, ADJUST. NO new supplements (0).
+             Full stack running. Schedule repeat blood panel. Document which to
+             continue, adjust, or discontinue. Expected improvements.
+
+CHELATION SAFETY GATE: Chlorella/cilantro ONLY at Wk 9-10 or later. Glutathione must be repleted first (8 weeks of NAC).
+
+Supplement card HOW TO PUT IT INTO PRACTICE format:
+   [Number]. [Supplement Name] ([exact form]) [dose] - [timing], [food context]
+   ALL PREVIOUS SUPPLEMENTS CONTINUED (from Wk 3-4 onward)
+   Safety: [Verified against member's medications]. [Interactions or "No interactions."]
+   DISCONTINUE: [if replacing something]
+   TOTAL SUPPLEMENTS: [running count]
+
+Supplement WHY IT WORKS must cite:
+   * Exact biomarker value showing the deficiency
+   * Percentage of optimal where impactful
+   * Biological mechanism connecting deficiency to member's symptoms
 
 DESIGN PRINCIPLES:
-1. Max 2-3 new changes per fortnightly period — sustainability > speed
-2. Build on previous period — never reset, always progress
-3. Indian dietary and cultural context throughout
-4. Clear enough for progress coach to execute without interpretation
-5. Every cell filled — 30 biweekly cards + 15 roadmap cells = 45 total
-6. Second person throughout — "you/your"
-7. Honest about timelines — "2-4 weeks for effect", "initially may feel worse"
-8. CORRECTING/SUPPORTING framework from protocol mode
-
-ANTI-HALLUCINATION CHECKS (verify before output):
-- All 45 cells filled (zero empty)
-- Biomarker values exact (no rounding)
-- No invented markers (only from original data)
-- Medications checked (every supplement vs medication list)
-- Symptoms from history only
-- No diagnosis language ("patterns consistent with", never "you have [disease]")
-- Sequential supplement intro (max 4-6 in Wk 1-2, then 2-3 per period)
-- Chelation timing (chlorella/cilantro ONLY after 8 weeks NAC — Week 9-10 earliest)
-- FOXO SYSTEM IMPACT label (not BIOMARKER IMPACT) in every card
-- Traceability (every recommendation connects to specific finding)
+   1. Max 2-3 new changes per fortnightly period — sustainability over speed
+   2. Build on previous period — never reset, always progress
+   3. Indian dietary and cultural context throughout
+   4. Clear enough for a progress coach to execute without interpretation
+   5. Every cell filled — 30 biweekly cards + 15 roadmap cells = 45 total
+   6. Second person ("you/your") throughout
+   7. Honest about timelines — "2-4 weeks for effect", "initially may feel worse"
+   8. CORRECTING/SUPPORTING framework preserved from protocol mode
+   9. No technical traceability tags anywhere — all humanized doctor-to-patient language
+  10. "POTENTIAL FOXO SYSTEM IMPACT" in every biweekly card — NEVER "BIOMARKER IMPACT"
 
 --- SYSTEM SUMMARIES FROM AGENT 2 ---
 {AGENT_2_SYSTEM_HANDOFF}
@@ -197,5 +319,8 @@ ANTI-HALLUCINATION CHECKS (verify before output):
 --- MEMBER CLINICAL HISTORY ---
 {CLINICAL_HISTORY}
 
---- ADVANCED INPUTS ---
+--- MEMBER MEDICATIONS (for supplement safety check) ---
+{MEDICATIONS_LIST}
+
+--- ADVANCED INPUTS (if available) ---
 {ADVANCED_INPUTS}
