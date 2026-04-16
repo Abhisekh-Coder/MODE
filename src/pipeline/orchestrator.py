@@ -302,6 +302,13 @@ class ModePipeline:
 
         foundation = self.config['foundation_prompt']
         prompt = template.replace('{FOUNDATION_PROMPT}', foundation)
+        # Inject FOXO ranges reference for Agent 1
+        try:
+            from parsers.biomarker_ranges import get_prompt_reference
+            prompt = prompt.replace('{FOXO_RANGES}', get_prompt_reference())
+        except Exception:
+            prompt = prompt.replace('{FOXO_RANGES}', '')
+
         prompt = prompt.replace('{BIOMARKER_DATA}', self.data.get('sheet2_text', ''))
         prompt = prompt.replace('{CLINICAL_HISTORY}', self.data.get('clinical_history', ''))
         prompt = prompt.replace('{SYMPTOMS_DATA}', self.data.get('symptoms', ''))

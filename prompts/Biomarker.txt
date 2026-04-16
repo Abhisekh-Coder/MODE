@@ -1,0 +1,90 @@
+FOXO OPTIMAL RANGES REFERENCE (use these ranges, NOT lab reference ranges):
+| Biomarker | Optimal Low | Optimal High | Ref Low | Ref High | Units |
+|-----------|-------------|--------------|---------|----------|-------|
+| % Transferrin Saturation | 24.0 | 35.0 | 13.0 | 45.0 | % |
+| 1-Methyl-histidine | 5.0 | 7.0 | 3.0 | 9.0 | nmol/ml |
+| 17-Hydroxyprogesterone (Male) | 80.0 | 180.0 | 27.0 | 199.0 | ng/dL |
+| Alanine Transaminase (SGPT) | 0.0 | 20.0 | 0.0 | 45.0 | U/L |
+| Albumin - Serum | 4.0 | 5.0 | 3.2 | 4.8 | gm/dL |
+| Alkaline Phosphatase | 60.0 | 100.0 | 45.0 | 129.0 | U/L |
+| Aluminium | 0.0 | 5.0 | 0.0 | 30.0 | µg/L |
+| Androstenedione (Male) | 118.33 | 161.67 | 75.0 | 205.0 | ng/dL |
+| Apolipoprotein - A1 (APO-A1) (Male) | 150.0 | 210.0 | 86.0 | 152.0 | mg/dL |
+| Apolipoprotein - B (APO-B) (Male) | 52.0 | 80.0 | 56.0 | 145.0 | mg/dL |
+| Arginine | 61.33 | 90.67 | 32.0 | 120.0 | nmol/ml |
+| Arsenic | 0.0 | 2.0 | 0.0 | 5.0 | µg/L |
+| Aspartate Aminotransferase (SGOT) (Male) | 10.0 | 26.0 | 0.0 | 31.0 | U/L |
+| Average Blood Glucose (ABG) | 65.0 | 99.0 | 90.0 | 120.0 | mg/dL |
+| Barium | 0.0 | 1.0 | 0.0 | 30.0 | µg/L |
+| Bilirubin - Total | 0.3 | 0.8 | 0.3 | 1.2 | mg/dL |
+| Blood Ketone (D3HB) | 1.08 | 1.94 | 0.21 | 2.81 | mg/dL |
+| Blood Urea Nitrogen (BUN) | 10.0 | 16.0 | 7.94 | 20.07 | mg/dL |
+| C-Peptide | 1.1 | 2.1 | 1.1 | 4.4 | ng/mL |
+| C-Reactive Protein (CRP) | 0.0 | 3.0 | 0.0 | 5.0 | mg/L |
+| Cadmium | 0.0 | 1.0 | 0.0 | 1.5 | µg/L |
+| Calcium | 8.9 | 9.5 | 8.8 | 10.6 | mg/dL |
+| Carnosine | 0.33 | 0.67 | 0.0 | 1.0 | nmol/ml |
+| Chloride | 100.0 | 108.0 | 98.0 | 107.0 | mmol/L |
+| Corticosterone | 555.33 | 1057.67 | 53.0 | 1560.0 | ng/dL |
+| Cortisol | 5.0 | 23.0 | 5.0 | 23.0 | µg/dL |
+| Creatinine - Serum | 0.8 | 1.1 | 0.72 | 1.18 | mg/dL |
+| Cysteine | 166.67 | 233.33 | 100.0 | 300.0 | nmol/ml |
+| Dehydroepiandrosterone (Male) | 536.67 | 893.33 | 180.0 | 1250.0 | ng/dL |
+| DHEA - Sulphate (DHEAS) (Male) | 350.0 | 500.0 | 125.0 | 619.0 | µg/dL |
+| Fasting Blood Sugar (Glucose) | 75.0 | 86.0 | 70.0 | 100.0 | mg/dL |
+| Ferritin (Male) | 45.0 | 79.0 | 21.81 | 274.66 | ng/mL |
+| Free T3 | 3.8844 | 5.4382 | 2.0 | 4.4 | pg/mL |
+| Free Thyroxine (FT4) | 1.1655 | 1.7871 | 0.93 | 1.7 | ng/dL |
+| Fructosamine | 190.0 | 228.0 | 0.0 | 286.0 | µmol/L |
+| Gamma Glutamyl Transferase (GGT) | 0.0 | 20.0 | 0.0 | 55.0 | U/L |
+| Glutamine | 534.33 | 640.67 | 428.0 | 747.0 | nmol/ml |
+| Glycine | 247.33 | 368.67 | 126.0 | 490.0 | nmol/ml |
+| HbA1c | 0.0 | 5.5 | 0.0 | 6.5 | % |
+| HDL Cholesterol - Direct | 50.0 | 90.0 | 40.0 | 60.0 | mg/dL |
+| Hematocrit (PCV) (Male) | 40.0 | 48.0 | 40.0 | 50.0 | % |
+| Hemoglobin (Male) | 14.0 | 17.0 | 13.0 | 17.0 | g/dL |
+| High Sensitivity C-Reactive Protein (HS-CRP) | 0.0 | 0.55 | 0.0 | 3.0 | mg/L |
+| Homocysteine | 0.0 | 7.0 | 0.0 | 15.0 | µmol/L |
+| Insulin - Fasting | 4.6 | 5.5 | 1.9 | 23.0 | µU/mL |
+| Iron | 100.0 | 175.0 | 65.0 | 175.0 | µg/dL |
+| Lactate Dehydrogenase (LDH) | 140.0 | 200.0 | 120.0 | 250.0 | U/L |
+| LDL Cholesterol - Direct | 80.0 | 99.99 | 0.0 | 100.0 | mg/dL |
+| Lead | 0.0 | 2.0 | 0.0 | 150.0 | µg/L |
+| Leucine | 106.33 | 144.67 | 68.0 | 183.0 | nmol/ml |
+| Lipase | 22.0 | 51.0 | 5.6 | 51.3 | U/L |
+| Lipoprotein (a) [LP(a)] | 0.0 | 18.0 | 0.0 | 30.0 | mg/dL |
+| LP-PLA2 | 0.0 | 165.0 | 0.0 | 225.0 | nmol/min/mL |
+| Lysine | 183.67 | 215.33 | 152.0 | 247.0 | nmol/ml |
+| Magnesium | 2.0 | 2.5 | 1.9 | 3.1 | mg/dL |
+| Mean Corpuscular Hemoglobin (MCH) | 28.0 | 31.9 | 27.0 | 32.0 | pq |
+| Mean Corpuscular Volume (MCV) | 85.0 | 92.0 | 83.0 | 101.0 | fL |
+| Mean Platelet Volume (MPV) | 7.5 | 8.2 | 6.5 | 12.0 | fL |
+| Mercury | 0.0 | 5.0 | 0.0 | 5.0 | µg/L |
+| Methionine | 22.0 | 33.0 | 11.0 | 44.0 | nmol/ml |
+| Nickel | 0.0 | 2.0 | 0.0 | 15.0 | µg/L |
+| Phenylalanine | 54.33 | 75.67 | 33.0 | 97.0 | nmol/ml |
+| Platelet Count | 190.0 | 300.0 | 150.0 | 410.0 | X 10³/µL |
+| Proline | 187.33 | 277.67 | 97.0 | 368.0 | nmol/ml |
+| Protein - Total | 6.5 | 8.0 | 5.7 | 8.2 | gm/dL |
+| Red Cell Distribution Width - CV (RDW-CV) | 11.5 | 13.0 | 11.6 | 14.0 | % |
+| Selenium | 70.0 | 121.0 | 60.0 | 340.0 | µg/L |
+| Serine | 104.0 | 145.0 | 63.0 | 187.0 | nmol/ml |
+| Serum Zinc | 99.0 | 130.0 | 52.0 | 286.0 | µg/dL |
+| Sodium | 137.0 | 142.0 | 136.0 | 145.0 | mmol/L |
+| Taurine | 79.33 | 112.67 | 46.0 | 146.0 | nmol/ml |
+| Testosterone (Male) | 700.0 | 1100.0 | 260.0 | 1000.0 | ng/dL |
+| Threonine | 133.67 | 182.33 | 85.0 | 231.0 | nmol/ml |
+| Total Cholesterol | 160.0 | 199.0 | 0.0 | 200.0 | mg/dL |
+| Total Iron Binding Capacity (TIBC) (Male) | 250.0 | 350.0 | 225.0 | 535.0 | µg/dL |
+| Total Thyroxine (T4) | 6.0 | 11.9 | 4.87 | 11.72 | µg/dL |
+| Total Triiodothyronine (T3) | 90.0 | 168.0 | 58.0 | 159.0 | ng/dL |
+| Triglycerides | 70.0 | 80.0 | 0.0 | 150.0 | mg/dL |
+| Tryptophan | 45.0 | 61.0 | 29.0 | 77.0 | nmol/ml |
+| TSH - Ultrasensitive | 1.88 | 3.41 | 0.35 | 4.94 | µIU/mL |
+| Uric Acid (Male) | 3.5 | 5.4 | 4.2 | 7.3 | mg/dL |
+| Vitamin A (Male) | 570.0 | 660.0 | 300.0 | 800.0 | ng/mL |
+| Vitamin B-12 | 545.0 | 1100.0 | 187.0 | 883.0 | pg/mL |
+| Vitamin B9/Folic Acid | 15.0 | 27.0 | 0.2 | 20.0 | ng/mL |
+| Vitamin D Total | 50.0 | 90.0 | 30.0 | 100.0 | ng/mL |
+| Vitamin E | 7400.0 | 30600.0 | 5500.0 | 18000.0 | ng/mL |
+| Valine | 193.67 | 251.33 | 136.0 | 309.0 | nmol/ml |

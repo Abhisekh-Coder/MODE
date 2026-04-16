@@ -1,0 +1,95 @@
+Source,Biomarker,Gender,Age (Low),Age (High),Female (Phases),Time of Day,Reference Low (TC),Optimal Low,Optimal High,Reference High (TC),Units,Loinc Code,Report Type
+Serum,% Transferrin Saturation,Unisex,,,,,13,24,35,45,%,2502-3,Blood
+Whole blood,1-Methyl-histidine,Unisex,,,,,3,5,7,9,nmol/ml,,Metabolomics
+Serum,17-Hydroxyprogesterone,Male,18,29,,,27,80,180,199,ng/dL,1952-1,Blood
+Serum,17-Hydroxyprogesterone,Male,30,39,,,42,70,160,196,ng/dl,1952-1,Blood
+Serum,Alanine Transaminase (SGPT),Unisex,,,,,0,0,20,45,U/L,1742-6,Blood
+Serum,Albumin - Serum,Unisex,,,,,3.2,4,5,4.8,gm/dL,1751-7,Blood
+Serum,Alkaline Phosphatase,Unisex,,,,,45,60,100,129,U/L,6768-6,Blood
+Whole blood,Aluminium,Unisex,,,,,0,0,5,30,µg/L,5575-8,Blood
+Serum,Androstenedione,Male,,,,,75,118.33,161.67,205,ng/dL,1842-4,Blood
+Serum,Apolipoprotein - A1 (APO-A1),Male,,,,,86,150,210,152,mg/dL,1869-3,Blood
+Serum,Apolipoprotein - B (APO-B),Male,,,,,56,52,80,145,mg/dL,1884-2,Blood
+Whole blood,Arginine,Unisex,,,,,32,61.33,90.67,120,nmol/ml,,Metabolomics
+Whole blood,Arsenic,Unisex,,,,,0,0,2,5,µg/L,5586-5,Blood
+Serum,Aspartate Aminotransferase (SGOT),Male,,,,,0,10,26,31,U/L,1920-8,Blood
+Whole blood,Average Blood Glucose (ABG),Unisex,,,,,90,65,99,120,mg/dL,27353-2,Blood
+Whole blood,Barium,Unisex,,,,,0,0,1,30,µg/L,5587-3,Blood
+Serum,Bilirubin - Total,Unisex,,,,,0.3,0.3,0.8,1.2,mg/dL,1975-2,Blood
+Serum,Blood Ketone (D3HB),Unisex,,,,,0.21,1.08,1.94,2.81,mg/dL,13695-9,Blood
+Serum,Blood Urea Nitrogen (BUN),Unisex,,,,,7.94,10.00,16.00,20.07,mg/dL,3094-0,Blood
+Serum,C-Peptide,Unisex,,,,,1.10,1.10,2.10,4.40,ng/mL,13032-0,Blood
+Serum,C-Reactive Protein (CRP),Unisex,,,,,0,0,3,5,mg/L,1988-5,Blood
+Whole blood,Cadmium,Unisex,,,,,0,0,1,1.5,µg/L,5592-3,Blood
+Serum,Calcium,Unisex,,,,,8.8,8.9,9.5,10.6,mg/dL,17861-6,Blood
+Whole blood,Carnosine,Unisex,,,,,0,0.33,0.67,1,nmol/ml,,Metabolomics
+Serum,Chloride,Unisex,,,,,98,100,108,107,mmol/L,2075-0,Blood
+Serum,Corticosterone,Unisex,,,,,53,555.33,1057.67,1560,ng/dL,14674-8,Blood
+Serum,Cortisol,Unisex,,,,,5,5,23,23,µg/dL,2143-6,Blood
+Serum,Creatinine - Serum,Unisex,,,,,0.72,0.80,1.10,1.18,mg/dL,2160-0,Blood
+Whole blood,Cysteine,Unisex,,,,,100,166.67,233.33,300,nmol/ml,,Metabolomics
+Serum,Dehydroepiandrosterone,Male,,,,,180,536.67,893.33,1250,ng/dL,19567-6,Blood
+Serum,DHEA - Sulphate (DHEAS),Male,18,29,,,125,350,500,619,µg/dL,2194-6,Blood
+Serum,DHEA - Sulphate (DHEAS),Male,30,39,,,120,280,400,532,µg/dL,2194-6,Blood
+Serum,DHEA - Sulphate (DHEAS),Male,40,49,,,95,200,350,413,µg/dL,2194-6,Blood
+Plasma,Fasting Blood Sugar (Glucose),Unisex,,,,,70,75,86,100,mg/dL,14771-0,Blood
+Serum,Ferritin,Male,,,,,21.81,45,79,274.66,ng/mL,2276-4,Blood
+Serum,Ferritin,Female,,,,,4.63,45,79,204,ng/mL,2276-4,Blood
+Serum,Free T3,Unisex,,,,,2.0,3.8844,5.4382,4.4,pg/mL,3051-0,Blood
+Serum,Free Thyroxine (FT4),Unisex,,,,,0.93,1.1655,1.7871,1.7,ng/dL,3024-3,Blood
+Serum,Fructosamine,Unisex,,,,,0,190,228,286,µmol/L,33259-8,Blood
+Serum,Gamma Glutamyl Transferase (GGT),Unisex,,,,,0,0,20,55,U/L,2324-2,Blood
+Whole blood,Glutamine,Unisex,,,,,428,534.33,640.67,747,nmol/ml,,Metabolomics
+Whole blood,Glycine,Unisex,,,,,126,247.33,368.67,490,nmol/ml,,Metabolomics
+Whole blood,HbA1c,Unisex,,,,,0,0,5.5,6.5,%,4548-4,Blood
+Serum,HDL Cholesterol - Direct,Unisex,,,,,40,50,90,60,mg/dL,2085-9,Blood
+Whole blood,Hematocrit (PCV),Male,,,,,40,40,48,50,%,4544-3,Blood
+Whole blood,Hemoglobin,Male,,,,,13,14,17,17,g/dL,718-7,Blood
+Whole blood,Hemoglobin,Female,,,,,13,13.5,16,17,g/dL,718-7,Blood
+Serum,High Sensitivity C-Reactive Protein (HS-CRP),Unisex,,,,,0,0,0.55,3,mg/L,30522-7,Blood
+Serum,Homocysteine,Unisex,,,,,0,0,7,15,µmol/L,13965-9,Blood
+Serum,Insulin - Fasting,Unisex,,,,,1.9,4.6,5.5,23,µU/mL,15083-0,Blood
+Serum,Iron,Unisex,,,,,65,100,175,175,µg/dL,2498-4,Blood
+Serum,Lactate Dehydrogenase (LDH),Unisex,,,,,120,140.00,200.00,250,U/L,2532-0,Blood
+Serum,LDL Cholesterol - Direct,Unisex,,,,,0,80,99.99,100,mg/dL,18262-6,Blood
+Whole blood,Lead,Unisex,,,,,0,0,2,150,µg/L,5671-5,Blood
+Whole blood,Leucine,Unisex,,,,,68,106.33,144.67,183,nmol/ml,,Metabolomics
+Serum,Lipase,Unisex,,,,,5.6,22,51,51.3,U/L,3040-3,Blood
+Serum,Lipoprotein (a) [LP(a)],Unisex,,,,,0,0.00,18.00,30,mg/dL,10835-7,Blood
+Serum,LP-PLA2,Unisex,,,,,0,0,165,225,nmol/min/mL,63698-8,Blood
+Whole blood,Lysine,Unisex,,,,,152,183.67,215.33,247,nmol/ml,,Metabolomics
+Serum,Magnesium,Unisex,,,,,1.9,2,2.5,3.1,mg/dL,19123-9,Blood
+Whole blood,Mean Corpuscular Hemoglobin (MCH),Unisex,,,,,27.0,28,31.9,32.0,pq,785-6,Blood
+Whole blood,Mean Corpuscular Volume (MCV),Unisex,,,,,83,85,92,101,fL,787-2,Blood
+Whole blood,Mean Platelet Volume (MPV),Unisex,,,,,6.5,7.5,8.2,12,fL,32623-1,Blood
+Whole blood,Mercury,Unisex,,,,,0,0,5,5,µg/L,5685-5,Blood
+Whole blood,Methionine,Unisex,,,,,11,22,33,44,nmol/ml,,Metabolomics
+Whole blood,Nickel,Unisex,,,,,0,0,2,15,µg/L,5686-3,Blood
+Whole blood,Phenylalanine,Unisex,,,,,33,54.33,75.67,97,nmol/ml,,Metabolomics
+Whole blood,Platelet Count,Unisex,,,,,150,190,300,410,X 10³/µL,777-3,Blood
+Whole blood,Proline,Unisex,,,,,97,187.33,277.67,368,nmol/ml,,Metabolomics
+Serum,Protein - Total,Unisex,,,,,5.7,6.5,8,8.2,gm/dL,2885-2,Blood
+Whole blood,Red Cell Distribution Width - CV (RDW-CV),Unisex,,,,,11.6,11.5,13,14,%,788-0,Blood
+Whole blood,Selenium,Unisex,,,,,60,70.00,121.00,340,µg/L,5706-9,Blood
+Whole blood,Serine,Unisex,,,,,63,104,145,187,nmol/ml,,Metabolomics
+Serum,Serum Zinc,Unisex,,,,,52,99,130,286,µg/dL,17638-3,Blood
+Serum,Sodium,Unisex,,,,,136,137,142,145,mmol/L,2951-2,Blood
+Whole blood,Taurine,Unisex,,,,,46,79.33,112.67,146,nmol/ml,,Metabolomics
+Serum,Testosterone,Male,,,,,260,700,1100,1000,ng/dL,2986-8,Blood
+Serum,Testosterone,Female,,,,,15,35,45,70,ng/dL,2986-8,Blood
+Whole blood,Threonine,Unisex,,,,,85,133.67,182.33,231,nmol/ml,,Metabolomics
+Serum,Total Cholesterol,Unisex,,,,,0,160,199,200,mg/dL,2093-3,Blood
+Serum,Total Iron Binding Capacity (TIBC),Male,,,,,225,250,350,535,µg/dL,2500-7,Blood
+Serum,Total Thyroxine (T4),Unisex,,,,,4.87,6.00,11.90,11.72,µg/dL,3026-8,Blood
+Serum,Total Triiodothyronine (T3),Unisex,,,,,58,90.00,168.00,159,ng/dL,3053-2,Blood
+Serum,Triglycerides,Unisex,,,,,0,70,80,150,mg/dL,2571-8,Blood
+Whole blood,Tryptophan,Unisex,,,,,29,45,61,77,nmol/ml,,Metabolomics
+Serum,TSH - Ultrasensitive,Unisex,,,,,0.35,1.88,3.41,4.94,µIU/mL,11580-8,Blood
+Serum,Uric Acid,Male,,,,,4.2,3.5,5.4,7.3,mg/dL,3084-1,Blood
+Serum,Uric Acid,Female,,,,,4.2,3,4.7,7.3,mg/dL,3084-1,Blood
+Serum,Vitamin A,Male,18,150,,,300,570,660,800,ng/mL,14834-3,Blood
+Serum,Vitamin B-12,Unisex,,,,,187,545,1100,883,pg/mL,2132-3,Blood
+Serum,Vitamin B9/Folic Acid,Unisex,,,,,0.2,15.00,27.00,20,ng/mL,2284-2,Blood
+Calculated from serum,Vitamin D Total,Unisex,,,,,30,50,90,100,ng/mL,62292-8,Blood
+Serum,Vitamin E,Unisex,,,,,5500,7400,30600,18000,ng/mL,14591-7,Blood
+Whole blood,Valine,Unisex,,,,,136,193.67,251.33,309,nmol/ml,,Metabolomics

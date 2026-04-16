@@ -88,6 +88,9 @@ CONFIRMED SYMPTOMS FROM CLINICAL HISTORY:
 [organized by system]
 --- END HANDOFF ---
 
+--- FOXO OPTIMAL RANGES (use these for 5-BAND classification, NOT lab ranges) ---
+{FOXO_RANGES}
+
 --- SHEET 2 DATA ---
 {BIOMARKER_DATA}
 
