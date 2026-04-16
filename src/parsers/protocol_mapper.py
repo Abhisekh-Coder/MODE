@@ -45,20 +45,25 @@ def map_agent3_to_goals(playbook_id: str, biweekly: dict, phases: list,
         # SUPPLEMENTS
         card = (biweekly.get('supplements') or [{}])[pi] if pi < len(biweekly.get('supplements', [])) else {}
         if card and card.get('how_to_practice'):
-            for si, step in enumerate(card['how_to_practice']):
-                supp = _parse_supplement(step)
-                if supp:
-                    results['supplements'].append({
-                        'id': str(uuid.uuid4()), 'playbook_id': playbook_id, 'member_id': member_id,
-                        'goal_id': str(uuid.uuid4()),
-                        'title': supp['name'], 'category': f'supplements_{supp["form"]}',
-                        'dosage': supp['dose'], 'dosage_unit': supp['unit'],
-                        'time_of_day': supp['time'], 'frequency': supp['freq'],
-                        'frequency_unit': supp['form'], 'intake_timing': supp['timing'],
-                        'notes': supp['notes'], 'sequence': si+1,
-                        'start_date': sd, 'end_date': ed, 'status': 'draft',
-                        'generated_by': 'playbook_ai', 'weeks': weeks,
-                    })
+            seq = 0
+            for step in card['how_to_practice']:
+                # Split compound lines like "Morning Stack: VitD 4000IU, B-Complex, CoQ10 100mg"
+                sub_items = _split_compound_supplements(step)
+                for sub in sub_items:
+                    supp = _parse_supplement(sub)
+                    if supp:
+                        seq += 1
+                        results['supplements'].append({
+                            'id': str(uuid.uuid4()), 'playbook_id': playbook_id, 'member_id': member_id,
+                            'goal_id': str(uuid.uuid4()),
+                            'title': supp['name'], 'category': f'supplements_{supp["form"]}',
+                            'dosage': supp['dose'], 'dosage_unit': supp['unit'],
+                            'time_of_day': supp['time'], 'frequency': supp['freq'],
+                            'frequency_unit': supp['form'], 'intake_timing': supp['timing'],
+                            'notes': supp['notes'], 'sequence': seq,
+                            'start_date': sd, 'end_date': ed, 'status': 'draft',
+                            'generated_by': 'playbook_ai', 'weeks': weeks,
+                        })
 
         # NUTRITION
         card = (biweekly.get('nutrition') or [{}])[pi] if pi < len(biweekly.get('nutrition', [])) else {}
@@ -148,11 +153,39 @@ def map_agent3_to_goals(playbook_id: str, biweekly: dict, phases: list,
 
 # ══ Supplement parsing ══
 
+def _split_compound_supplements(step: str) -> list:
+    """Split compound supplement lines like 'Morning Stack: VitD 4000IU, B-Complex, CoQ10 100mg'"""
+    s = step.strip()
+    # If line contains "Stack" or multiple supplements separated by comma with doses
+    if any(k in s.lower() for k in ['stack', 'chelation support']):
+        # Remove the prefix "Morning Stack (with breakfast):"
+        parts = s.split(':', 1)
+        if len(parts) > 1:
+            prefix_info = parts[0]  # "Morning Stack (with breakfast)"
+            items_text = parts[1]
+            # Split by comma, keeping dose info
+            items = [i.strip() for i in items_text.split(',') if i.strip() and len(i.strip()) > 3]
+            if len(items) > 1:
+                # Inherit time_of_day from prefix
+                tod = ''
+                if 'morning' in prefix_info.lower() or 'breakfast' in prefix_info.lower():
+                    tod = ' - morning with breakfast'
+                elif 'lunch' in prefix_info.lower():
+                    tod = ' - afternoon with lunch'
+                elif 'dinner' in prefix_info.lower() or 'evening' in prefix_info.lower():
+                    tod = ' - evening with dinner'
+                elif 'bedtime' in prefix_info.lower() or 'bed' in prefix_info.lower():
+                    tod = ' - evening before bed'
+                return [item + tod for item in items]
+    return [s]
+
+
 def _parse_supplement(step: str) -> dict:
     s = step.strip()
-    # Skip non-supplement lines
-    skip = ['all previous', 'safety', 'discontinue', 'total supplement', 'continue', 'no interaction']
-    if any(k in s.lower() for k in skip):
+    # Skip non-supplement lines (only skip if the LINE STARTS with these)
+    sl = s.lower()
+    skip_starts = ['all previous', 'safety check', 'safety:', 'discontinue', 'total supplement', 'continue all', 'continue your']
+    if any(sl.startswith(k) or sl.startswith('**' + k) for k in skip_starts):
         return None
     if len(s) < 10:
         return None
