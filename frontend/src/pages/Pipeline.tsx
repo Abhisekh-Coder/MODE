@@ -1113,6 +1113,8 @@ export default function Pipeline() {
     { key: 'uploads' as const, label: 'Upload Logs' },
   ];
 
+  const hasAgent3 = playbook.agents?.[3]?.status === 'complete' || playbook.agents?.[3]?.status === 'review';
+
   return (
     <div className="max-w-4xl">
       <div className="text-[11px] text-white/30 mb-4">
@@ -1140,10 +1142,16 @@ export default function Pipeline() {
         </div>
       )}
 
-      <div className="flex border-b border-white/[0.06] mb-5">
+      <div className="flex items-center border-b border-white/[0.06] mb-5">
         {tabs.map((t) => (
-          <button key={t.key} className={clsx('px-4 py-2.5 text-[12px] border-b-2 transition', activeTab === t.key ? 'text-purple-400 border-blue-600 font-medium' : 'text-white/30 border-transparent hover:text-white/60')} onClick={() => setTab(t.key)}>{t.label}</button>
+          <button key={t.key} className={clsx('px-4 py-2.5 text-[12px] border-b-2 transition', activeTab === t.key ? 'text-purple-400 border-purple-400 font-medium' : 'text-white/30 border-transparent hover:text-white/60')} onClick={() => setTab(t.key)}>{t.label}</button>
         ))}
+        <div className="flex-1" />
+        {hasAgent3 && (
+          <button className="px-4 py-1.5 text-[11px] rounded-xl font-medium text-white transition hover:scale-[1.02] mb-1" style={{ background: 'linear-gradient(135deg, #059669, #10b981)' }} onClick={() => navigate(`/pipeline/${playbook.run_id}/protocol`)}>
+            View Protocol →
+          </button>
+        )}
       </div>
       {activeTab === 'agents' && (isComplete ? <ExportComplete playbook={playbook} /> : (
         <div>
