@@ -14,18 +14,24 @@ const COMPONENTS = [
 
 const WEEKS = ['Week 1-2', 'Week 3-4', 'Week 5-6', 'Week 7-8', 'Week 9-10', 'Week 11-12'];
 
-function GoalCard({ goal, onClick }: { goal: any; onClick: () => void }) {
+function GoalCard({ goal, onClick, showDose }: { goal: any; onClick: () => void; showDose?: boolean }) {
+  const hasDose = showDose && (goal.dosage || goal.intake_timing);
+  const hasTime = goal.range_start && goal.range_unit;
   return (
     <div className="glass glass-hover p-3.5 flex items-center justify-between cursor-pointer" onClick={onClick}>
       <div className="flex-1 min-w-0">
         <div className="text-[12px] font-medium text-white/80 truncate">{goal.title}</div>
-        {goal.notes && <div className="text-[10px] text-white/30 mt-0.5 truncate">{goal.notes}</div>}
-        {goal.dosage && <div className="text-[10px] text-white/25 mt-0.5">{goal.dosage} {goal.dosage_unit}</div>}
+        {goal.notes && <div className="text-[10px] text-white/30 mt-0.5 line-clamp-2">{goal.notes?.replace(/^\[.*?\]\s*/, '')}</div>}
       </div>
       <div className="flex items-center gap-2 flex-shrink-0 ml-3">
-        {goal.time_of_day && (
+        {hasDose && (
           <span className="text-[9px] px-2 py-0.5 rounded-lg bg-white/5 text-white/30">
-            {goal.frequency || 1}x · {goal.intake_timing === 'pre_meal' ? 'Pre Meal' : goal.intake_timing === 'post_meal' ? 'Post Meal' : 'With Meal'}
+            {goal.dosage || ''} · {goal.intake_timing === 'pre_meal' ? 'Pre Meal' : goal.intake_timing === 'post_meal' ? 'Post Meal' : 'With Meal'}
+          </span>
+        )}
+        {hasTime && !hasDose && (
+          <span className="text-[9px] px-2 py-0.5 rounded-lg bg-white/5 text-white/30">
+            {goal.range_start} {goal.range_unit} · {goal.frequency || 1}x {goal.recurrence || 'Daily'}
           </span>
         )}
         <ChevronRight size={14} className="text-white/20" />
@@ -227,6 +233,23 @@ export default function Protocol() {
         </button>
       </div>
 
+      {/* General Guides */}
+      {(protocol.guidelines || []).length > 0 && (
+        <div className="mb-4">
+          <div className="text-[10px] font-semibold text-white/25 uppercase tracking-wider mb-2">General Guides</div>
+          <div className="flex gap-2 overflow-x-auto pb-1">
+            {protocol.guidelines.map((g: any) => (
+              <div key={g.id} className="glass px-4 py-3 flex-shrink-0 min-w-[120px] text-center">
+                <div className="text-[18px] mb-1">
+                  {g.category?.includes('screen') ? '📵' : g.category?.includes('eating') || g.category?.includes('fast') ? '⏰' : g.category?.includes('gluten') ? '🚫' : g.category?.includes('caffeine') ? '☕' : '📋'}
+                </div>
+                <div className="text-[10px] text-white/50 leading-tight">{g.title}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Week selector */}
       <div className="flex gap-1.5 mb-4 overflow-x-auto pb-1">
         {WEEKS.map((w, i) => (
@@ -268,7 +291,7 @@ export default function Protocol() {
                 <div key={time} className="mb-4">
                   <div className="text-[10px] font-semibold text-white/25 uppercase tracking-wider mb-2 capitalize">{time}</div>
                   <div className="space-y-1.5">
-                    {goals.map((g: any) => <GoalCard key={g.id} goal={g} onClick={() => setOverlay({ goal: g, table: 'supplement_goals' })} />)}
+                    {goals.map((g: any) => <GoalCard key={g.id} goal={g} showDose onClick={() => setOverlay({ goal: g, table: 'supplement_goals' })} />)}
                   </div>
                 </div>
               )
@@ -283,8 +306,46 @@ export default function Protocol() {
                 </div>
               </div>
             ))
+          ) : activeComp === 'stress' || activeComp === 'sleep' ? (
+            // Stress/Sleep grouped by time of day (from note prefix or time_of_day)
+            (() => {
+              const groups: Record<string, any[]> = { Morning: [], Daytime: [], Evening: [] };
+              for (const g of weekFiltered) {
+                const tod = g.time_of_day || (g.note?.match(/^\[(.*?)\]/)?.[1]) || 'Daytime';
+                const key = tod.charAt(0).toUpperCase() + tod.slice(1);
+                if (!groups[key]) groups[key] = [];
+                groups[key].push(g);
+              }
+              return Object.entries(groups).map(([time, goals]) =>
+                goals.length > 0 && (
+                  <div key={time} className="mb-4">
+                    <div className="text-[10px] font-semibold text-white/25 uppercase tracking-wider mb-2">{time}</div>
+                    <div className="space-y-1.5">
+                      {goals.map((g: any) => <GoalCard key={g.id} goal={g} onClick={() => setOverlay({ goal: g, table: `${activeComp}_goals` })} />)}
+                    </div>
+                  </div>
+                )
+              );
+            })()
+          ) : activeComp === 'activities' ? (
+            // Activities grouped by activity_group (NEAT/Cardio/Strength/Mobility)
+            (() => {
+              const groups: Record<string, any[]> = {};
+              for (const g of weekFiltered) {
+                const grp = (g.activity_group || 'general').toUpperCase();
+                if (!groups[grp]) groups[grp] = [];
+                groups[grp].push(g);
+              }
+              return Object.entries(groups).map(([group, goals]) => (
+                <div key={group} className="mb-4">
+                  <div className="text-[10px] font-semibold text-white/25 uppercase tracking-wider mb-2">{group}</div>
+                  <div className="space-y-1.5">
+                    {goals.map((g: any) => <GoalCard key={g.id} goal={g} onClick={() => setOverlay({ goal: g, table: 'activity_goals' })} />)}
+                  </div>
+                </div>
+              ));
+            })()
           ) : (
-            // Generic list
             <div className="space-y-1.5">
               {weekFiltered.map((g: any) => <GoalCard key={g.id} goal={g} onClick={() => setOverlay({ goal: g, table: `${activeComp}_goals` })} />)}
             </div>
