@@ -101,7 +101,7 @@ function ProcessSteps({ playbook, agentNum }: { playbook: Playbook; agentNum: nu
 
 // ─── Agent Card ───
 function AgentCard({ playbook, agentNum, onRun, onApprove, onNext, isLastCompleted, onViewOutput }: {
-  playbook: Playbook; agentNum: 1 | 2 | 3;
+  playbook: Playbook; agentNum: 1 | 2 | 3 | 4;
   onRun: (feedback?: string) => void; onApprove: (edits?: string) => void;
   onNext: () => void; isLastCompleted: boolean; onViewOutput?: () => void;
 }) {
@@ -122,8 +122,8 @@ function AgentCard({ playbook, agentNum, onRun, onApprove, onNext, isLastComplet
   const status = info?.status ?? 'waiting';
   const isStreaming = streamingAgent === agentNum;
 
-  const names: Record<number, string> = { 1: 'Biomarker Analysis', 2: 'System Mapping', 3: 'Humanized Roadmap' };
-  const models: Record<number, string> = { 1: 'Opus 4.6', 2: 'Sonnet 4', 3: 'Sonnet 4' };
+  const names: Record<number, string> = { 1: 'Biomarker Analysis', 2: 'System Mapping', 3: 'Humanized Roadmap', 4: 'Protocol Structuring' };
+  const models: Record<number, string> = { 1: 'Opus 4.6', 2: 'Sonnet 4', 3: 'Sonnet 4', 4: 'Sonnet 4' };
 
   const loadPrompt = async () => {
     if (!showPrompt) {
@@ -1089,13 +1089,16 @@ export default function Pipeline() {
 
   if (!playbook) return <div className="flex items-center justify-center h-full"><div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" /></div>;
 
-  const handleRun = (n: 1|2|3, fb?: string) => startStreaming(playbook.run_id, n, fb);
-  const handleApprove = async (n: 1|2|3, edits?: string) => { await api.approveAgent(playbook.run_id, n, edits ? { raw_output: edits } : undefined); refreshStatus(); };
-  const handleNext = (n: 1|2|3) => { if (n < 3) handleRun((n + 1) as 1|2|3); };
-  const handleViewOutput = (n: 1|2|3) => {
-    // Redirect to Sheets tab showing the agent's sheet
+  const handleRun = (n: number, fb?: string) => startStreaming(playbook.run_id, n, fb);
+  const handleApprove = async (n: number, edits?: string) => { await api.approveAgent(playbook.run_id, n, edits ? { raw_output: edits } : undefined); refreshStatus(); };
+  const handleNext = (n: number) => { if (n < 4) handleRun((n + 1) as any); };
+  const handleViewOutput = (n: number) => {
+    if (n === 4) {
+      navigate(`/pipeline/${playbook.run_id}/protocol`);
+      return;
+    }
     const sheetMap: Record<number, number> = { 1: 3, 2: 4, 3: 5 };
-    setSheet(sheetMap[n]);
+    setSheet(sheetMap[n] || 1);
     setTab('sheets');
   };
   const lastCompleted = [3, 2, 1].find(n => playbook.agents[n as 1|2|3]?.status === 'complete') as 1|2|3|undefined;
@@ -1155,7 +1158,7 @@ export default function Pipeline() {
       </div>
       {activeTab === 'agents' && (isComplete ? <ExportComplete playbook={playbook} /> : (
         <div>
-          {([1, 2, 3] as const).map((n) => <AgentCard key={n} playbook={playbook} agentNum={n} onRun={(fb) => handleRun(n, fb)} onApprove={(e) => handleApprove(n, e)} onNext={() => handleNext(n)} isLastCompleted={lastCompleted === n} onViewOutput={() => handleViewOutput(n)} />)}
+          {([1, 2, 3, 4] as const).map((n) => <AgentCard key={n} playbook={playbook} agentNum={n} onRun={(fb) => handleRun(n, fb)} onApprove={(e) => handleApprove(n, e)} onNext={() => handleNext(n)} isLastCompleted={lastCompleted === n} onViewOutput={() => handleViewOutput(n)} />)}
         </div>
       ))}
       {activeTab === 'sheets' && <SheetsTab playbook={playbook} />}

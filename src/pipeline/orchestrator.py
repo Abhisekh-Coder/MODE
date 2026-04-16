@@ -13,7 +13,7 @@ from datetime import datetime
 from parsers.biomarkers import parse_biomarker_xlsx, format_sheet2_for_prompt
 from parsers.clinical_history import parse_clinical_history_docx
 from parsers.ocr_pipeline import process_file
-from parsers.agent_output import parse_agent1_response, parse_agent2_response, parse_agent3_response
+from parsers.agent_output import parse_agent1_response, parse_agent2_response, parse_agent3_response, parse_agent4_response
 from parsers.handoff_builder import build_agent1_handoff, build_agent2_handoff
 from pipeline.log_store import LogStore
 from pipeline import db
@@ -30,7 +30,8 @@ class ModePipeline:
     """
     State machine:
     IDLE → DATA_UPLOADED → AGENT_1_RUNNING → AGENT_1_REVIEW
-    → AGENT_2_RUNNING → AGENT_2_REVIEW → AGENT_3_RUNNING → AGENT_3_REVIEW → COMPLETE
+    → AGENT_2_RUNNING → AGENT_2_REVIEW → AGENT_3_RUNNING → AGENT_3_REVIEW
+    → AGENT_4_RUNNING → AGENT_4_REVIEW → COMPLETE
 
     Every state transition and output is persisted to Supabase.
     On error, state is recoverable — user retries the failed agent.
@@ -82,6 +83,10 @@ class ModePipeline:
                     'max_tokens': int(os.getenv('AGENT3_MAX_TOKENS', 30000)),
                     'temperature': 0,
                     'prompt_file': str(prompts_dir / 'agent3_humanized_roadmap.txt')},
+                4: {'model': os.getenv('SONNET_MODEL', 'claude-sonnet-4-20250514'),
+                    'max_tokens': int(os.getenv('AGENT4_MAX_TOKENS', 30000)),
+                    'temperature': 0,
+                    'prompt_file': str(prompts_dir / 'agent4_protocol_structuring.txt')},
             },
             'foundation_prompt': foundation,
         }
@@ -314,6 +319,7 @@ class ModePipeline:
         prompt = prompt.replace('{SYMPTOMS_DATA}', self.data.get('symptoms', ''))
         prompt = prompt.replace('{AGENT_1_CLUSTER_HANDOFF}', self.handoffs.get('agent1', ''))
         prompt = prompt.replace('{AGENT_2_SYSTEM_HANDOFF}', self.handoffs.get('agent2', ''))
+        prompt = prompt.replace('{AGENT_3_OUTPUT}', self.raw_outputs.get('agent3', ''))
 
         advanced = ''
         for key, label in [('radiology', 'RADIOLOGY'), ('physio', 'PHYSIO'), ('ct_scan', 'CT SCAN')]:
@@ -408,7 +414,7 @@ class ModePipeline:
                             'full_response': collected}, agent=agent_num)
 
             # Parse
-            parsers = {1: parse_agent1_response, 2: parse_agent2_response, 3: parse_agent3_response}
+            parsers = {1: parse_agent1_response, 2: parse_agent2_response, 3: parse_agent3_response, 4: parse_agent4_response}
             parsed = parsers[agent_num](collected)
             self.outputs[f'agent{agent_num}'] = parsed
 
@@ -439,6 +445,11 @@ class ModePipeline:
                           f'Handoff extracted: {len(handoff):,} chars', agent=agent_num)
 
             self._run_validation(agent_num, parsed)
+
+            # Agent 4: auto-save structured protocol to Supabase
+            if agent_num == 4 and 'protocol' in parsed:
+                self._save_protocol(parsed)
+
             self._transition(f'AGENT_{agent_num}_REVIEW')
             yield {'type': 'complete', 'parsed': parsed}
 
@@ -491,7 +502,7 @@ class ModePipeline:
         self.approved_agents.add(agent_num)
         db.set_approved_agents(self.run_id, list(self.approved_agents))
 
-        if agent_num >= 3:
+        if agent_num >= 4:
             self._transition('COMPLETE')
             self._log('INFO', 'pipeline', 'pipeline.complete',
                       f'Pipeline complete. ${self.cost_tracking["total_cost_usd"]:.2f} (₹{self.cost_tracking["total_cost_inr"]:.0f})')
@@ -518,6 +529,41 @@ class ModePipeline:
 
     # ═══ EXPORT ═══
 
+    def _save_protocol(self, parsed: dict):
+        """Save Agent 4 structured JSON output to protocol tables."""
+        import uuid as _uuid
+        protocol = parsed.get('protocol', parsed)
+
+        table_map = {
+            'phases': 'protocol_phases',
+            'guidelines': 'protocol_guidelines',
+            'supplements': 'supplement_goals',
+            'nutrition': 'nutrition_goals',
+            'sleep': 'sleep_goals',
+            'stress': 'stress_goals',
+            'activities': 'activity_goals',
+        }
+
+        # Clear existing protocol data for this playbook
+        for table in table_map.values():
+            db._rest('DELETE', table, f'?playbook_id=eq.{self.run_id}')
+
+        total = 0
+        for key, table in table_map.items():
+            records = protocol.get(key, [])
+            for rec in records:
+                rec['id'] = str(_uuid.uuid4())
+                rec['playbook_id'] = self.run_id
+                rec['generated_by'] = 'playbook_ai'
+                rec['status'] = rec.get('status', 'draft')
+                db._rest('POST', table, body=rec)
+                total += 1
+
+        self._log('INFO', 'agent', 'agent.protocol_saved',
+                  f'Protocol saved: {total} goals across {len(table_map)} tables',
+                  data={'total': total, 'counts': {k: len(protocol.get(k, [])) for k in table_map}},
+                  agent=4)
+
     def export_xlsx(self, output_path: str):
         from builders.xlsx_builder import build_workbook
         self._log('INFO', 'export', 'export.start', 'Building XLSX')
@@ -535,7 +581,7 @@ class ModePipeline:
             'cost_total': self.cost_tracking['total_cost_usd'],
             'cost_tracking': self.cost_tracking,
             'upload_files': self.upload_files_info,
-            'agents': {1: self._agent_status(1), 2: self._agent_status(2), 3: self._agent_status(3)},
+            'agents': {1: self._agent_status(1), 2: self._agent_status(2), 3: self._agent_status(3), 4: self._agent_status(4)},
         }
 
     def _agent_status(self, n):

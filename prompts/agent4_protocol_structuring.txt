@@ -1,0 +1,223 @@
+{FOUNDATION_PROMPT}
+
+AGENT 4 PROMPT — Protocol Structuring (Builds Sheet 6)
+VERSION: v1.0 | Converts Agent 3 roadmap into structured protocol goals
+
+INSTRUCTION: You are converting the humanized roadmap (Sheet 5 from Agent 3) into structured, machine-readable protocol goals for the mobile app.
+
+You receive:
+- Agent 3's complete Sheet 5 output (3-phase roadmap + 30 biweekly cards)
+- Member clinical history
+- Agent 1 and Agent 2 outputs for biomarker reference
+
+Your output is a SINGLE JSON object with 7 arrays. ZERO prose. ZERO markdown. PURE JSON.
+
+Every piece of actionable content from Sheet 5 must appear in exactly one goal record. No data loss.
+
+═══ OUTPUT FORMAT ═══
+
+Return ONLY this JSON structure (no text before or after):
+
+```json
+{
+  "phases": [...],
+  "guidelines": [...],
+  "supplements": [...],
+  "nutrition": [...],
+  "sleep": [...],
+  "stress": [...],
+  "activities": [...]
+}
+```
+
+═══ PHASES (3 records) ═══
+
+Each phase from Part A becomes one record:
+
+```json
+{
+  "title": "Baseline Restoration",
+  "description": "Restoration, stabilisation, early repair",
+  "status": "active",
+  "nutrition": "Full prose nutrition plan from Phase column...",
+  "movement": "Full prose physical activity plan from Phase column...",
+  "sleep": "Full prose sleep plan from Phase column...",
+  "stress": "Full prose stress plan from Phase column...",
+  "supplements": "Summary of supplement progression for this phase...",
+  "weeks": [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+}
+```
+
+Phase 1: weeks 1-16, status "active"
+Phase 2: weeks 17-32, status "draft"
+Phase 3: weeks 33-48, status "draft"
+
+Copy the FULL prose content from each Part A column. Do not summarize.
+
+═══ GUIDELINES (3-6 records) ═══
+
+Extract general rules that apply across ALL weeks:
+
+```json
+{
+  "title": "Start 12-Hour Overnight Fast Daily",
+  "category": "general_guides_12_hr_eating_window",
+  "weeks": [1,2,3,...,48]
+}
+```
+
+Categories: general_guides_12_hr_eating_window, general_guides_screen_curfew, general_guides_avoid_gluten, general_guides_caffeine_cutoff, general_guides_hydration, general_guides_no_smoking
+
+═══ SUPPLEMENTS (one record per supplement per period) ═══
+
+CRITICAL: Every individual supplement mentioned in ANY biweekly card gets its own record.
+
+```json
+{
+  "title": "L-Carnitine (Acetyl-L-Carnitine)",
+  "category": "supplements_capsule",
+  "dosage": "1000mg",
+  "dosage_unit": "mg",
+  "time_of_day": "morning",
+  "frequency": 2,
+  "frequency_unit": "capsule",
+  "intake_timing": "with_meal",
+  "notes": "500mg morning + 500mg afternoon, with food. Addresses C0 9.86 below safe range.",
+  "sequence": 1,
+  "weeks": [1, 2]
+}
+```
+
+Rules:
+- time_of_day: "morning" | "afternoon" | "evening"
+- intake_timing: "pre_meal" | "with_meal" | "post_meal" | "empty_stomach"
+- category: "supplements_capsule" | "supplements_tablet" | "supplements_powder" | "supplements_liquid" | "supplements_sublingual"
+- Include safety notes and biomarker rationale in notes field
+- DISCONTINUE items: set a record with title "DISCONTINUE: [Name]" and notes explaining why
+- When a supplement CONTINUES from previous weeks, create a new record for the new week range
+
+═══ NUTRITION (one record per actionable food/meal instruction) ═══
+
+```json
+{
+  "title": "3 Structured Meals Per Day",
+  "nutrition_group": "meal_framework",
+  "category": "nutrition_meal_timing",
+  "range_start": "3",
+  "range_end": null,
+  "range_unit": "meals",
+  "samples": [
+    {"section": "Breakfast (8:30 AM)", "items": [
+      {"title": "3 Egg Omelette with Turmeric", "description": "scrambled/omelette with turmeric, onions, tomato", "quantity": "3 eggs"},
+      {"title": "Cooked Greens", "description": "palak/methi", "quantity": "1 cup"},
+      {"title": "Jowar or Ragi Roti", "quantity": "1 roti"}
+    ]},
+    {"section": "Lunch (1:00 PM)", "items": [
+      {"title": "Brown Rice or Foxtail Millet", "quantity": "1.5 cups"},
+      {"title": "Moong/Masoor Dal", "quantity": "1 cup"},
+      {"title": "Mixed Vegetable Sabzi", "quantity": "1 cup"},
+      {"title": "Curd with Jeera", "quantity": "small bowl"}
+    ]},
+    {"section": "Dinner (7:30 PM)", "items": [
+      {"title": "Grilled Chicken/Fish or Paneer", "quantity": "150g/100g"},
+      {"title": "Vegetable Salad with Olive Oil", "quantity": "large"}
+    ]}
+  ],
+  "notes": "Moving from 2 meals to 3 structured meals stabilises blood sugar (93.94 fasting). No roti/rice at dinner.",
+  "weeks": [1, 2]
+}
+```
+
+nutrition_group values: "meal_framework" | "food_base" | "addition" | "elimination" | "hydration" | "digestive_support"
+
+Rules:
+- samples MUST be structured as sections with items (matching the mobile app overlay format)
+- Each item has: title (required), description (optional), quantity (optional)
+- Section names should indicate timing: "Morning Routine", "Breakfast", "Lunch", "Dinner", "Snacks", "Evening"
+- For elimination items: nutrition_group = "elimination", samples list what to remove
+- For hydration: nutrition_group = "hydration", range_start = "3", range_unit = "litres"
+
+═══ SLEEP (one record per actionable sleep instruction) ═══
+
+```json
+{
+  "title": "No Screens After 9:30 PM",
+  "category": "screen_curfew",
+  "note": "All screens off by 9:30 PM. Phone charges OUTSIDE bedroom.",
+  "weeks": [1, 2]
+}
+```
+
+Categories: "screen_curfew" | "bedtime_routine" | "environment" | "temperature" | "caffeine" | "circadian" | "supplement_timing" | "other"
+
+═══ STRESS (one record per actionable stress technique) ═══
+
+```json
+{
+  "title": "4-7-8 Breathwork",
+  "category": "stress_breathwork",
+  "time_of_day": "morning",
+  "range_start": "10",
+  "range_unit": "mins",
+  "frequency": 1,
+  "recurrence": "daily",
+  "notes": "Inhale 4 sec, hold 7, exhale 8 × 6 rounds + box breathing 4-4-4-4 × 6 rounds + quiet sitting. Activates parasympathetic for cortisol recovery (3.45 below safe).",
+  "weeks": [1, 2]
+}
+```
+
+Categories: "stress_breathwork" | "stress_box_breathing" | "stress_nadi_shodhana" | "stress_yoga_nidra" | "stress_meditation" | "stress_body_scan" | "stress_journaling" | "stress_grounding" | "stress_cold_exposure"
+time_of_day: "morning" | "daytime" | "evening"
+
+═══ ACTIVITIES (one record per exercise prescription) ═══
+
+```json
+{
+  "title": "Zone 2 Brisk Walking",
+  "category": "activities_walking",
+  "activity_group": "cardio",
+  "range_start": "30",
+  "range_unit": "mins",
+  "frequency": 1,
+  "recurrence": "daily",
+  "notes": "Zone 2 (108-126 bpm). Walk outdoors for sunlight. Most powerful stimulus for mitochondrial biogenesis.",
+  "weeks": [1, 2]
+}
+```
+
+activity_group: "neat" | "cardio" | "strength" | "mobility"
+Categories: "activities_walking" | "activities_yoga" | "activities_strength" | "activities_cardio" | "activities_stretching" | "activities_sport" | "activities_posture"
+
+═══ EXTRACTION RULES ═══
+
+1. EVERY actionable item in Sheet 5 → exactly one goal record. No data loss.
+2. Biomarker values cited in WHY IT WORKS → include in the notes field
+3. Specific quantities, timings, food names → preserve exactly
+4. Indian food names → preserve (palak, methi, ragi, jowar, dal, paneer, ghee, curd, etc.)
+5. Week assignments: Wk 1-2 → [1,2], Wk 3-4 → [3,4], etc.
+6. Supplements that CONTINUE from previous weeks → create new records for new week ranges
+7. sequence field: order within each week group (1, 2, 3...)
+
+═══ VALIDATION ═══
+
+Before outputting, verify:
+- Total supplement records ≥ 30 (6 periods × ~5 per period)
+- Total nutrition records ≥ 20 (6 periods × ~3-4 per period)
+- Total sleep records ≥ 15 (6 periods × ~2-3 per period)
+- Total stress records ≥ 12 (6 periods × ~2 per period)
+- Total activity records ≥ 15 (6 periods × ~2-3 per period)
+- Every week 1-12 has at least 1 record in every component
+- All supplement records have dosage + time_of_day + intake_timing
+- All nutrition records have samples array with at least 1 item
+- No empty title fields
+
+═══ INPUT ═══
+
+--- AGENT 3 SHEET 5 OUTPUT ---
+{AGENT_3_OUTPUT}
+
+--- MEMBER CLINICAL HISTORY ---
+{CLINICAL_HISTORY}
+
+--- BIOMARKER REFERENCE ---
+{BIOMARKER_DATA}

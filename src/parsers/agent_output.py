@@ -179,6 +179,33 @@ def parse_agent2_response(raw: str) -> dict:
     }
 
 
+def parse_agent4_response(raw: str) -> dict:
+    """Parse Agent 4 JSON output — structured protocol goals."""
+    import json as _json
+    # Extract JSON from the response (may have markdown code fences)
+    text = raw.strip()
+    if '```json' in text:
+        text = text.split('```json')[1].split('```')[0].strip()
+    elif '```' in text:
+        text = text.split('```')[1].split('```')[0].strip()
+
+    try:
+        data = _json.loads(text)
+        return {
+            'protocol': data,
+            'phases': data.get('phases', []),
+            'guidelines': data.get('guidelines', []),
+            'supplements': data.get('supplements', []),
+            'nutrition': data.get('nutrition', []),
+            'sleep': data.get('sleep', []),
+            'stress': data.get('stress', []),
+            'activities': data.get('activities', []),
+            'raw_text': raw,
+        }
+    except _json.JSONDecodeError as e:
+        return {'protocol': {}, 'error': str(e), 'raw_text': raw}
+
+
 def parse_agent3_response(raw: str) -> dict:
     """Parse Agent 3 (combined roadmap + humanized) response."""
     phases = _parse_phases(raw)

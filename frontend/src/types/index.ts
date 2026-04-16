@@ -36,6 +36,7 @@ export interface Playbook {
     1: AgentInfo;
     2: AgentInfo;
     3: AgentInfo;
+    4: AgentInfo;
   };
   cost_total: number;
   markers_total?: number;
