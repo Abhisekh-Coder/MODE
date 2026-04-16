@@ -574,12 +574,18 @@ def get_protocol(run_id):
     """Get all protocol goals for a pipeline run."""
     from pipeline import db as _db
 
-    tables = ['protocol_phases', 'protocol_guidelines', 'supplement_goals',
-              'nutrition_goals', 'sleep_goals', 'stress_goals', 'activity_goals']
+    table_map = {
+        'protocol_phases': ('phases', 'created_at'),
+        'protocol_guidelines': ('guidelines', 'sequence'),
+        'supplement_goals': ('supplements', 'sequence'),
+        'nutrition_goals': ('nutrition', 'sequence'),
+        'sleep_goals': ('sleep', 'sequence'),
+        'stress_goals': ('stress', 'sequence'),
+        'activity_goals': ('activities', 'sequence'),
+    }
     result = {}
-    for t in tables:
-        key = t.replace('_goals', '').replace('protocol_', '')
-        rows = _db._rest('GET', t, f'?playbook_id=eq.{run_id}&order=sequence')
+    for table, (key, order) in table_map.items():
+        rows = _db._rest('GET', table, f'?playbook_id=eq.{run_id}&order={order}')
         result[key] = rows
 
     return jsonify(result)
