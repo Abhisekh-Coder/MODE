@@ -67,6 +67,22 @@ export const api = {
   getSheet: (runId: string, sheetNum: number) =>
     request<any>(`/pipeline/${runId}/sheet/${sheetNum}`),
 
+  // ═══ PROTOCOL ═══
+
+  generateProtocol: (runId: string, startDate?: string) =>
+    request<any>(`/pipeline/${runId}/protocol/generate`, {
+      method: 'POST',
+      body: JSON.stringify({ start_date: startDate }),
+    }),
+
+  getProtocol: (runId: string) => request<any>(`/pipeline/${runId}/protocol`),
+
+  updateGoal: (runId: string, table: string, goalId: string, data: any) =>
+    request(`/pipeline/${runId}/protocol/${table}/${goalId}`, {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    }),
+
   // ═══ UPLOADS ═══
 
   getUploads: (runId: string) => request<any[]>(`/pipeline/${runId}/uploads`),

@@ -7,6 +7,7 @@ import NewPlaybook from './pages/NewPlaybook';
 import Pipeline from './pages/Pipeline';
 import SettingsPrompts from './pages/SettingsPrompts';
 import SettingsModels from './pages/SettingsModels';
+import Protocol from './pages/Protocol';
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const authed = sessionStorage.getItem('mode_auth') === 'true';
@@ -30,6 +31,7 @@ export default function App() {
         <Route path="/new" element={<NewPlaybook />} />
         <Route path="/pipeline" element={<Dashboard />} />
         <Route path="/pipeline/:runId" element={<Pipeline />} />
+        <Route path="/pipeline/:runId/protocol" element={<Protocol />} />
         <Route path="/settings/prompts" element={<SettingsPrompts />} />
         <Route path="/settings/models" element={<SettingsModels />} />
       </Route>

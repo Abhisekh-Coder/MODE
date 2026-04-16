@@ -526,6 +526,77 @@ def get_sheet_data(run_id, sheet_num):
 
 
 # ═══════════════════════════════════════
+# PROTOCOL GOALS (Agent 3 structured output)
+# ═══════════════════════════════════════
+
+@api_bp.route('/pipeline/<run_id>/protocol/generate', methods=['POST'])
+def generate_protocol(run_id):
+    """Map Agent 3 output into structured protocol goals and save to Supabase."""
+    p = _get_or_restore(run_id)
+    if not p:
+        return jsonify({'error': 'Pipeline not found'}), 404
+
+    raw = p.raw_outputs.get('agent3', '')
+    if not raw:
+        return jsonify({'error': 'Agent 3 has not run yet'}), 400
+
+    from parsers.protocol_mapper import map_agent3_to_goals
+    cards = _parse_roadmap_cards(raw)
+    phases = _parse_roadmap_phases(raw)
+
+    start_date = request.json.get('start_date') if request.json else None
+    goals = map_agent3_to_goals(run_id, cards, phases, start_date=start_date)
+
+    # Save to Supabase
+    from pipeline import db as _db
+    if _db.is_connected():
+        for table, records in [
+            ('protocol_phases', goals['phases']),
+            ('protocol_guidelines', goals['guidelines']),
+            ('supplement_goals', goals['supplements']),
+            ('nutrition_goals', goals['nutrition']),
+            ('sleep_goals', goals['sleep']),
+            ('stress_goals', goals['stress']),
+            ('activity_goals', goals['activities']),
+        ]:
+            for rec in records:
+                _db._rest('POST', table, body=rec)
+
+    return jsonify({
+        'generated': True,
+        'counts': {k: len(v) for k, v in goals.items()},
+        'total': sum(len(v) for v in goals.values()),
+    })
+
+
+@api_bp.route('/pipeline/<run_id>/protocol', methods=['GET'])
+def get_protocol(run_id):
+    """Get all protocol goals for a pipeline run."""
+    from pipeline import db as _db
+
+    tables = ['protocol_phases', 'protocol_guidelines', 'supplement_goals',
+              'nutrition_goals', 'sleep_goals', 'stress_goals', 'activity_goals']
+    result = {}
+    for t in tables:
+        key = t.replace('_goals', '').replace('protocol_', '')
+        rows = _db._rest('GET', t, f'?playbook_id=eq.{run_id}&order=sequence')
+        result[key] = rows
+
+    return jsonify(result)
+
+
+@api_bp.route('/pipeline/<run_id>/protocol/<table>/<goal_id>', methods=['PATCH'])
+def update_protocol_goal(run_id, table, goal_id):
+    """Update a single protocol goal."""
+    from pipeline import db as _db
+    valid_tables = ['supplement_goals', 'nutrition_goals', 'sleep_goals', 'stress_goals', 'activity_goals']
+    if table not in valid_tables:
+        return jsonify({'error': 'Invalid table'}), 400
+    _db._rest('PATCH', table, f'?id=eq.{goal_id}', request.json)
+    return jsonify({'updated': True})
+
+
+# ═══════════════════════════════════════
 # UPLOAD FILES
 # ═══════════════════════════════════════
 
